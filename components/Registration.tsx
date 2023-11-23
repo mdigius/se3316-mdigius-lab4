@@ -1,10 +1,9 @@
 "use client";
-import { useRouter } from 'next/router';
+
 import React from 'react'
 import Image from 'next/image'
 import CustomButton from './CustomButton'
-import Link from 'next/link'
-const Hero = () => {
+const Registration = () => {
     const handleScroll = () => {
 
     }
@@ -12,18 +11,16 @@ const Hero = () => {
     <div className="hero">
         <div className="flex-1 pt-36 padding-x">
             <h1 className="hero__title">
-                Superhero Website!
+                Register!
             </h1>
             <p>
-                Sign in or register today to view superhero information and create favourite lists!
+                Please enter an email and password below to register for our website.
             </p>
             <CustomButton
-            title="Register"
+            title="Create Account"
             containerStyles="bg-primary-blue
             text-white rounded-full mt-10"
-            href = "/register"
             handleClick = {handleScroll}
-            
              />
         </div>
         <div className="hero__image-container">
@@ -37,4 +34,4 @@ const Hero = () => {
   )
 }
 
-export default Hero
+export default Registration
