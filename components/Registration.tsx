@@ -6,9 +6,10 @@ import CustomButton from './CustomButton'
 import Link from 'next/link';
 
 const Registration = () => {
-    const handleScroll = () => {
+    async function handleSubmit() {
 
     }
+
   return (
     <div className="hero">
         <div className="flex-1 pt-36 padding-x">
@@ -18,7 +19,7 @@ const Registration = () => {
             <p>
                 Please enter an email and password below to register for our website.
             </p>
-            <form className="flex max-w-md flex-col gap-4">
+            <form className="flex max-w-md flex-col gap-4" onSubmit={()=>{handleSubmit}}>
                 <div>
                     <div className="mb-2 block">
                     <Label htmlFor="email2" value="Email" />
