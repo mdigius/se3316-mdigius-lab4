@@ -19,7 +19,7 @@ const Registration = () => {
             <p>
                 Please enter an email and password below to register for our website.
             </p>
-            <form className="flex max-w-md flex-col gap-4" onSubmit={()=>{handleSubmit}}>
+            <form className="flex max-w-md flex-col gap-4 mt-10" onSubmit={()=>{handleSubmit}}>
                 <div>
                     <div className="mb-2 block">
                     <Label htmlFor="email2" value="Email" />
