@@ -7,7 +7,7 @@ import Link from 'next/link';
 
 const Registration = () => {
     async function handleSubmit() {
-
+        
     }
 
   return (
