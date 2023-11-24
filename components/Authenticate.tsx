@@ -6,9 +6,8 @@ import { HiInformationCircle } from 'react-icons/hi';
 import CustomButton from './CustomButton';
 import Link from 'next/link';
 
-const Registration = () => {
+const Authenticate = () => {
     const [username, setUsername] = useState('');
-    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showAlert, setShowAlert] = useState(false); // State to manage alert visibility
     const [alertMessage, setAlertMessage] = useState(''); // State to manage alert message
@@ -20,43 +19,21 @@ const Registration = () => {
         // Creates json body object to be passed in post request
         const data = {
             username: username,
-            email: email,
             password: password
         };
 
-        fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data),
-        })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then(responseData => {
-                console.log('POST successful:', responseData);
-                setAlertMessage('Registration successful!');
-                setShowAlert(true);
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                setAlertMessage(`Error! Username or email already taken.`);
-                setShowAlert(true);
-            });
+        
+        
     }
 
     return (
         <div className="hero">
             <div className="flex-1 pt-36 padding-x">
                 <h1 className="hero__title">
-                    Register!
+                    Login
                 </h1>
                 <p>
-                    Please enter a username, email, and password below to register for our website.
+                    Please login with the username and password you registered with.
                 </p>
                 <form className="flex max-w-md flex-col gap-4 mt-10" onSubmit={handleSubmit}>
                     <div>
@@ -75,20 +52,6 @@ const Registration = () => {
                     </div>
                     <div>
                         <div className="mb-2 block">
-                            <Label htmlFor="email2" value="Email" />
-                        </div>
-                        <TextInput
-                            id="email2"
-                            type="email"
-                            placeholder="example@example.com"
-                            required
-                            shadow
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                        />
-                    </div>
-                    <div>
-                        <div className="mb-2 block">
                             <Label htmlFor="password2" value="Password" />
                         </div>
                         <TextInput
@@ -101,7 +64,7 @@ const Registration = () => {
                             onChange={(e) => setPassword(e.target.value)}
                         />
                     </div>
-                    <Button type="submit">Register new account</Button>
+                    <Button type="submit">Login</Button>
                     {/* Conditionally render the Alert component */}
                     {showAlert && <Alert color="failure" icon={HiInformationCircle}>{alertMessage}</Alert>}
                 </form>
@@ -117,5 +80,5 @@ const Registration = () => {
     )
 }
 
-export default Registration;
+export default Authenticate;
 

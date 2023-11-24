@@ -3,7 +3,8 @@ const fs = require('fs');
 const cors = require('cors');
 const sanitizeHtml = require('sanitize-html');
 const {MongoClient} = require('mongodb')
-
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 const uri = 'mongodb+srv://mdigius:mdigi2012@cluster0.xfcxsn5.mongodb.net/?retryWrites=true&w=majority'
     
 const client = new MongoClient(uri);
@@ -30,22 +31,56 @@ app.use(express.json());
 
 app.route('/api/secure/')
     .get(async (req, res) => {
+        const username = req.body.username;
+        const password = req.body.password;
 
+        const usernameResult = await client.db("Superheroes").collection("Users").findOne({ username: username });
+
+        if (!usernameResult) {
+            return res.status(404).json({ error: 'No account with provided username' });
+        }
+
+        // Use bcrypt.compare to compare the hashed password with the provided password
+        const isPasswordMatch = await bcrypt.compare(password, usernameResult.password);
+
+        if (isPasswordMatch) {
+            res.status(201).json({ message: 'Successfully authenticated user' });
+        } else {
+            return res.status(400).json({ error: 'Invalid password' });
+        }
     })
-
     .post(async (req, res) => {
-        const userName = req.body.username
+
+        const username = req.body.username
         const email = req.body.email
         const password = req.body.password
+        // Verifies that the request included all proper parameters
+        if(!username || !email || !password){
+            return res.status(400).json({ error: 'Improper parameters in req body' });
+        }
+        // Checks to see if there is already an account registered to the passed username and email
+        const usernameResult = await client.db("Superheroes").collection("Users").findOne({username: username})
+        const emailResult = await client.db("Superheroes").collection("Users").findOne({email: email})
+        // If so send an error
+        if(usernameResult){
+            return res.status(400).json({ error: 'Username taken' });
+        }
+        if(emailResult){
+            return res.status(400).json({ error: 'Email taken' });
+        }
+
+        // Hash the password before storing it for security purposes
+        const saltRounds = 10;
+        const hashedPassword = await bcrypt.hash(password, saltRounds);
         user = {
-            userName: userName,
+            username: username,
             email: email,
-            password: password
+            password: hashedPassword,
+            disabled: false
 
         }
         client.db("Superheroes").collection("Users").insertOne(user)
         res.status(201).json({ message: 'Succesfully added user'})
-
     })
 
 // // Returns all superhero list names (Keys in the storage)
