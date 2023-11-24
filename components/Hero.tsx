@@ -13,7 +13,7 @@ const Hero = () => {
     <div className="hero">
         <div className="flex-1 pt-36 padding-x">
             <h1 className="hero__title">
-                Superhero Website!
+                HeroHub
             </h1>
             <p>
                 Sign in or register today to view superhero information and create favourite lists!

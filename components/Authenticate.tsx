@@ -18,12 +18,12 @@ const Authenticate = () => {
         event.preventDefault();
         // URL to connect to api
         const url = 'http://localhost:5001/api/secure/';
-        // Creates json body object to be passed in post request
+        // Creates json body object to be passed in post request params
         const data = {
             username: username,
             password: password
         };
-        // Assuming data is an object with parameters
+        // Converts the data to URL params
         const params = new URLSearchParams(data);
 
         // Construct the URL with parameters
@@ -42,10 +42,12 @@ const Authenticate = () => {
             })
             .then(responseData => {
                 console.log('POST successful:', responseData);
-                router.push('/fart55')
+                // If succesful authentication, reroute to account page
+                router.push('/')
             })
             .catch(error => {
                 console.error('Error:', error);
+                // Set an alert if authentication failed
                 setAlertMessage(`Error! Incorrect username or password.`);
                 setShowAlert(true);
             });

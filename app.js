@@ -29,7 +29,37 @@ const superheroInfo = JSON.parse(fs.readFileSync('superhero_info.json'));
 const superheroPowers = JSON.parse(fs.readFileSync('superhero_powers.json'));
 app.use(express.json());
 
-app.route('/api/secure/')
+app.route('/api/secure/:user/lists')
+    .get(async (req, res) => {
+        const username = req.params.user
+        const listResults = await client.db("Superheroes").collection("Lists").find({ username: username }).toArray();
+
+        if (!listResults.length>0) {
+            return res.status(404).json({ error: 'User has no lists!' });
+        }
+
+        res.json(listResults);
+
+    })
+    .post(async (req, res) => {
+        const username = req.params.user
+        const heroIDs = req.body.heroIDs
+        const listName = req.body.listName
+        // Verifies that the request included all proper parameters
+        if(!username || !heroIDs){
+            return res.status(400).json({ error: 'Improper parameters in req body' });
+        }
+        list = {
+            username: username,
+            listName: listName,
+            heroIDs: heroIDs
+        }
+        client.db("Superheroes").collection("Lists").insertOne(list)
+        res.status(201).json({ message: 'Successfully created list' })
+        
+    })
+
+    app.route('/api/secure/')
     .get(async (req, res) => {
         const username = req.query.username;
         const password = req.query.password;

@@ -11,8 +11,8 @@ const Registration = () => {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [showAlert, setShowAlert] = useState(false); // State to manage alert visibility
-    const [alertMessage, setAlertMessage] = useState(''); // State to manage alert message
+    const [showAlert, setShowAlert] = useState(false); 
+    const [alertMessage, setAlertMessage] = useState(''); 
 
     async function handleSubmit(event: React.FormEvent) {
         event.preventDefault();
