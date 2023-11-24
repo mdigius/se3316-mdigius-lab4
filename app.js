@@ -20,7 +20,7 @@ async function listDatabases(){
         console.log(`- ${db.name}`)
     })
 }
-listDatabases()
+
 const app = express();
 
 app.use(cors());
@@ -31,8 +31,8 @@ app.use(express.json());
 
 app.route('/api/secure/')
     .get(async (req, res) => {
-        const username = req.body.username;
-        const password = req.body.password;
+        const username = req.query.username;
+        const password = req.query.password;
 
         const usernameResult = await client.db("Superheroes").collection("Users").findOne({ username: username });
 

@@ -3,10 +3,11 @@ import { Button, Checkbox, Label, Alert, TextInput } from "flowbite-react";
 import React, { useState } from 'react';
 import Image from 'next/image';
 import { HiInformationCircle } from 'react-icons/hi';
-import CustomButton from './CustomButton';
-import Link from 'next/link';
+import Link from "next/link";
+import { useRouter } from 'next/navigation'
 
 const Registration = () => {
+    const router = useRouter()
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -39,8 +40,7 @@ const Registration = () => {
             })
             .then(responseData => {
                 console.log('POST successful:', responseData);
-                setAlertMessage('Registration successful!');
-                setShowAlert(true);
+                router.push('/authenticate')
             })
             .catch(error => {
                 console.error('Error:', error);

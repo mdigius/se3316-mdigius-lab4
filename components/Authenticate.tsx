@@ -5,8 +5,10 @@ import Image from 'next/image';
 import { HiInformationCircle } from 'react-icons/hi';
 import CustomButton from './CustomButton';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation'
 
 const Authenticate = () => {
+    const router = useRouter()
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [showAlert, setShowAlert] = useState(false); // State to manage alert visibility
@@ -21,8 +23,34 @@ const Authenticate = () => {
             username: username,
             password: password
         };
+        // Assuming data is an object with parameters
+        const params = new URLSearchParams(data);
 
-        
+        // Construct the URL with parameters
+        const urlWithParams = `${url}?${params}`;
+        fetch(urlWithParams, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(responseData => {
+                console.log('POST successful:', responseData);
+                router.push('/fart55')
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                setAlertMessage(`Error! Incorrect username or password.`);
+                setShowAlert(true);
+            });
+
+
         
     }
 
