@@ -1,9 +1,10 @@
-import React from 'react'
+import * as components from '@/components'
+import Image from 'next/image'
 
-const page = () => {
+export default function Superheroes() {
   return (
-    <div>page</div>
+    <main className="overflow-hidden">
+      <components.Superheroes />
+    </main>
   )
 }
-
-export default page

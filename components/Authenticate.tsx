@@ -43,7 +43,7 @@ const Authenticate = () => {
             .then(responseData => {
                 console.log('POST successful:', responseData);
                 // If succesful authentication, reroute to account page
-                router.push('/')
+                router.push('/superheroes')
             })
             .catch(error => {
                 console.error('Error:', error);
@@ -94,14 +94,14 @@ const Authenticate = () => {
                             onChange={(e) => setPassword(e.target.value)}
                         />
                     </div>
-                    <Button type="submit">Login</Button>
+                    <Button outline gradientDuoTone="redToYellow" type="submit">Login</Button>
                     {/* Conditionally render the Alert component */}
                     {showAlert && <Alert color="failure" icon={HiInformationCircle}>{alertMessage}</Alert>}
                 </form>
             </div>
             <div className="hero__image-container">
-                <div className="hero__image">
-                    <Image src="/deadpool.png" alt="hero"
+                <div className="hero__image flipped">
+                    <Image src="/venom.png" alt="hero"
                         fill className="object-contain"
                     />
                 </div>

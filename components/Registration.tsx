@@ -101,14 +101,14 @@ const Registration = () => {
                             onChange={(e) => setPassword(e.target.value)}
                         />
                     </div>
-                    <Button type="submit">Register new account</Button>
+                    <Button outline gradientDuoTone="purpleToBlue" type="submit">Register new account</Button>
                     {/* Conditionally render the Alert component */}
                     {showAlert && <Alert color="failure" icon={HiInformationCircle}>{alertMessage}</Alert>}
                 </form>
             </div>
             <div className="hero__image-container">
                 <div className="hero__image">
-                    <Image src="/deadpool.png" alt="hero"
+                    <Image src="/spiderman2.png" alt="hero"
                         fill className="object-contain"
                     />
                 </div>
