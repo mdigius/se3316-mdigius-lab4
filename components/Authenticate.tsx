@@ -17,7 +17,7 @@ const Authenticate = () => {
     async function handleSubmit(event: React.FormEvent) {
         event.preventDefault();
         // URL to connect to api
-        const url = 'http://localhost:5001/api/secure/';
+        const url = 'http://localhost:5002/api/secure/';
         // Creates json body object to be passed in post request params
         const data = {
             username: username,

@@ -5,6 +5,7 @@ import React from 'react'
 import Image from 'next/image'
 import CustomButton from './CustomButton'
 import Link from 'next/link'
+import SuperheroResult from "./SuperheroResult";
 
 const Superheroes = () => {
   return (
@@ -37,8 +38,11 @@ const Superheroes = () => {
                 />
                 <Button outline gradientDuoTone="tealToLime" type="submit">Search!</Button>
             </form>
+            <SuperheroResult/>
 
         </div>
+
+        
        
         
         <div className="hero__image-container">

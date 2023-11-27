@@ -17,7 +17,7 @@ const Registration = () => {
     async function handleSubmit(event: React.FormEvent) {
         event.preventDefault();
         // URL to connect to api
-        const url = 'http://localhost:5001/api/secure/';
+        const url = 'http://localhost:5002/api/secure/';
         // Creates json body object to be passed in post request
         const data = {
             username: username,
@@ -107,8 +107,8 @@ const Registration = () => {
                 </form>
             </div>
             <div className="hero__image-container">
-                <div className="hero__image">
-                    <Image src="/spiderman2.png" alt="hero"
+                <div className="hero__image flipped">
+                    <Image src="/antman.png" alt="hero"
                         fill className="object-contain"
                     />
                 </div>

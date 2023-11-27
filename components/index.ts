@@ -5,6 +5,7 @@ import Navbar from './Navbar'
 import Registration from './Registration'
 import Authenticate from './Authenticate'
 import Superheroes from './Superheroes'
+import SuperheroResult from './SuperheroResult'
 
 export {
     Hero,
@@ -13,5 +14,6 @@ export {
     Navbar,
     Registration,
     Authenticate,
-    Superheroes
+    Superheroes,
+    SuperheroResult
 }
