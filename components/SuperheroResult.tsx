@@ -18,6 +18,8 @@ interface SuperheroData {
 }
 
 const SuperheroResult = () => {
+
+    
   const [superheroData, setSuperheroData] = useState<SuperheroData | null>(null);
 
   useEffect(() => {

@@ -144,7 +144,7 @@ app.route('/api/superheroInfo/name/:name')
     });
 
 // Functionality for searching powers for a given superhero name
-app.route('/api/powers/hero/:name')
+app.route('/api/power/hero/:name')
     .get((req, res) => {
         const name = req.params.name.toLowerCase();
         const powers = superheroPowers.find((power) => power.hero_names.toLowerCase() === name);
@@ -163,7 +163,7 @@ app.route('/api/powers/hero/:name')
     });
 
 // Search functionality to return all hero names with a given power
-app.get('/api/powers/:power', (req, res) => {
+app.get('/api/power/:power', (req, res) => {
     const requestedPower = req.params.power.toLowerCase();
     const heroes = new Set();
 
@@ -191,7 +191,7 @@ app.get('/api/powers/:power', (req, res) => {
 
 
 // Returns list of all publishers
-app.get('/api/publishers', (req, res) => {
+app.get('/api/publisher', (req, res) => {
     const publishers = new Set();
     superheroInfo.forEach((hero) => {
         publishers.add(hero.Publisher.toLowerCase());
@@ -200,7 +200,7 @@ app.get('/api/publishers', (req, res) => {
 });
 
 // Returns a list of all heroes from a given publisher
-app.get('/api/publishers/:id', (req, res) => {
+app.get('/api/publisher/:id', (req, res) => {
     const pub = req.params.id.toLowerCase();
     const heroes = new Set();
     superheroInfo.forEach((hero) => {
