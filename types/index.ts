@@ -7,9 +7,20 @@ export interface CustomButtonProps {
     btnType?: "button" | "submit";
     href?: string;
 }
+export interface SuperheroData {
+    id: number;
+    name: string;
+    Gender: string;
+    "Eye color": string;
+    Race: string;
+    "Hair color": string;
+    Height: number;
+    Publisher: string;
+    "Skin color": string;
+    Alignment: string;
+    Weight: number;
+  }
 
 export interface SuperheroResultProps {
-    heroName: string;
-    heroInfo: string;
-    url: string;
+    superheroData: SuperheroData;
 }

@@ -6,12 +6,14 @@ import Image from 'next/image'
 import CustomButton from './CustomButton'
 import Link from 'next/link'
 import SuperheroResult from "./SuperheroResult";
+import { SuperheroResultProps } from "@/types";
 
 const Superheroes = () => {
     const router = useRouter()
     const [searchCriteria, setSearchCriteria] = useState('name');
     const [searchQuery, setSearchQuery] = useState('');
     const [returnN, setReturnN] = useState('8');
+    const [superheroResults, setSuperheroResults] = useState([]);
     async function handleSearch(event: React.FormEvent){
         event.preventDefault()
         var url = "http://localhost:5002/api/"
@@ -48,7 +50,8 @@ const Superheroes = () => {
             .then(responseData => {
                 console.log('GET successful:', responseData);
                 // If succesful authentication, reroute to account page
-                console.log(responseData.json)
+                setSuperheroResults(responseData)
+                console.log(superheroResults)
             })
             .catch(error => {
                 console.error('Error:', error);
@@ -107,11 +110,13 @@ const Superheroes = () => {
                 
                 <Button outline gradientDuoTone="tealToLime" type="submit">Search!</Button>
             </form>
-            <SuperheroResult/>
-            <SuperheroResult/>
-            <SuperheroResult/>
-            <SuperheroResult/>
-            <SuperheroResult/>
+            <div className='results' id='results'>
+            {superheroResults.map(result => (
+                
+                <SuperheroResult superheroData={result}/> 
+            ))}
+
+            </div>
 
         </div>
 
