@@ -69,14 +69,21 @@ app.route('/api/secure/:user/lists')
         if (!usernameResult) {
             return res.status(404).json({ error: 'No account with provided username' });
         }
+        if(usernameResult.verified == false){
+            return res.status(400).json({ error: 'Account is not verified' });
 
+        }
+        if(usernameResult.disabled == true){
+            return res.status(400).json({ error: 'Account is disabled. Contact site administrator' });
+            
+        }
         // Use bcrypt.compare to compare the hashed password with the provided password
         const isPasswordMatch = await bcrypt.compare(password, usernameResult.password);
 
         if (isPasswordMatch) {
             res.status(201).json({ message: 'Successfully authenticated user' });
         } else {
-            return res.status(400).json({ error: 'Invalid password' });
+            return res.status(401).json({ error: 'Invalid password' });
         }
     })
     .post(async (req, res) => {
@@ -105,8 +112,8 @@ app.route('/api/secure/:user/lists')
             username: username,
             email: email,
             password: hashedPassword,
-            disabled: false
-
+            disabled: false,
+            verified: false
         }
         client.db("Superheroes").collection("Users").insertOne(user)
         res.status(201).json({ message: 'Succesfully added user'})
