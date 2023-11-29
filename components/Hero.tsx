@@ -17,10 +17,10 @@ const Hero = () => {
                 Welcome to HeroHub! Register for an account to create custom superhero lists, or view heroes as a guest!
             </p>
             
-        <Button className="mt-10" gradientDuoTone="cyanToBlue" href="/register">
+        <Button className="mt-10 transition-transform transform hover:scale-105" gradientDuoTone="cyanToBlue" href="/register">
             Sign up!
             </Button>
-            <Button className="mt-10" gradientDuoTone="cyanToBlue" href="/superheroes">
+            <Button className="mt-10 transition-transform transform hover:scale-105" gradientDuoTone="cyanToBlue" href="/superheroes">
             View Heroes!
             </Button>
         </div>

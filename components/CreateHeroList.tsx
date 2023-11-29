@@ -57,7 +57,7 @@ const CreateHeroList = () => {
                   <div className="flex max-w-md flex-col gap-4">
                     <ToggleSwitch checked={switch1} label="Public List?" onChange={setSwitch1} />
                   </div>
-                  <Button outline gradientDuoTone="redToYellow" type="submit" className="mt-5">Create List</Button>
+                  <Button className="mt-5 transition-transform transform hover:scale-105" outline gradientDuoTone="redToYellow" type="submit">Create List</Button>
                     {/* Conditionally render the Alert component */}
                     {showAlert && <Alert color="failure" icon={HiInformationCircle}>{alertMessage}</Alert>}
             </form>

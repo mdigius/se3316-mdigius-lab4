@@ -1,11 +1,12 @@
 "use client";
-import {Button, TextInput, Select, Label}from "flowbite-react";
+import {Button, TextInput, Select, Label, Alert}from "flowbite-react";
 import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
 import Image from 'next/image'
 import CustomButton from './CustomButton'
 import Link from 'next/link'
 import SuperheroResult from "./SuperheroResult";
+import { HiInformationCircle } from 'react-icons/hi';
 import { SuperheroResultProps } from "@/types";
 
 const Superheroes = () => {
@@ -14,6 +15,9 @@ const Superheroes = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const [returnN, setReturnN] = useState('8');
     const [superheroResults, setSuperheroResults] = useState([]);
+    const [showAlert, setShowAlert] = useState(false); // State to manage alert visibility
+    const [alertMessage, setAlertMessage] = useState(''); // State to manage alert message
+
     async function handleSearch(event: React.FormEvent){
         event.preventDefault()
         var url = "http://localhost:5002/api/"
@@ -51,9 +55,13 @@ const Superheroes = () => {
                 console.log('GET successful:', responseData);
                 // If succesful authentication, reroute to account page
                 setSuperheroResults(responseData)
+                setShowAlert(false);
                 console.log(superheroResults)
             })
             .catch(error => {
+                setSuperheroResults([])
+                setAlertMessage(`No heroes found for ${searchCriteria}: ${searchQuery}`);
+                setShowAlert(true);
                 console.error('Error:', error);
             });
 
@@ -86,7 +94,12 @@ const Superheroes = () => {
                 placeholder="Example: Batman"
                 required
                 shadow
-                onChange={(e) => setSearchQuery(e.target.value)}
+                onChange={(e) => {
+                    setSearchQuery(e.target.value);
+                    // if(e.target.value!=''){
+                    //     handleSearch(e); 
+                    // }
+                  }}
                 />
                 <div className="mb-2 block">
                     <Label value="Results Length" />
@@ -107,16 +120,16 @@ const Superheroes = () => {
                     </Select>
                 </div>
                 
-                <Button outline gradientDuoTone="tealToLime" type="submit">Search!</Button>
+                <Button className="transition-transform transform hover:scale-105" outline gradientDuoTone="tealToLime" type="submit">Search!</Button>
+                {showAlert && <Alert color="failure" icon={HiInformationCircle}>{alertMessage}</Alert>}
             </form>
             <div className='results' id='results'>
-            {superheroResults.map(result => (
-                
-                <SuperheroResult superheroData={result}/> 
-            ))}
-
+                {superheroResults.map((result, index) => (
+                    <div key={index} className="transition-transform transform hover:scale-105">
+                    <SuperheroResult superheroData={result} />
+                    </div>
+                ))}        
             </div>
-
         </div>
 
         

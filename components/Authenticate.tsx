@@ -109,7 +109,7 @@ const Authenticate = () => {
                             onChange={(e) => setPassword(e.target.value)}
                         />
                     </div>
-                    <Button outline gradientDuoTone="redToYellow" type="submit">Login</Button>
+                    <Button outline gradientDuoTone="redToYellow" type="submit" className="transition-transform transform hover:scale-105">Login</Button>
                     {/* Conditionally render the Alert component */}
                     {showAlert && <Alert color="failure" icon={HiInformationCircle}>{alertMessage}</Alert>}
                 </form>

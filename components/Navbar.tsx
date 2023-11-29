@@ -6,15 +6,14 @@ import { CustomButton } from '.';
 const Navbar = () => {
   return (
     <header className="w-full absolute z-9">
-      <nav className="bg-blue-300 max-w-[1440px] mx-auto flex justify-between items-center rounded-2xl sm:px-16 px-6 py-4">
-
-        <Link href="/" className="flex justify-center items-center">
+      <nav className="mt-3 bg-blue-300 max-w-[1440px] mx-auto flex justify-between items-center rounded-2xl sm:px-16 px-6 py-4">
+        <Link href="/" className="flex justify-center items-center z-10">
           <Image
-            src="/next.svg"
+            src="/herohub.png"
             alt="logo"
             width={118}
             height={18}
-            className="object-contain"
+            className="object-contain transition-transform transform hover:scale-105" 
           />
         </Link>
 
@@ -23,19 +22,21 @@ const Navbar = () => {
             title="Privacy Policy"
             href="/"
             btnType="button"
-            containerStyles="text-white rounded-xl bg-black-100 min-w-w[130px]"
+            containerStyles="text-white rounded-xl bg-black-100 min-w-w[130px] transition-transform transform hover:scale-105"
+            
           />
           <CustomButton
+          
             title="View Heroes"
             href="/superheroes"
             btnType="button"
-            containerStyles="text-white rounded-xl bg-black-100 min-w-w[130px]"
+            containerStyles="text-white rounded-xl bg-black-100 min-w-w[130px] transition-transform transform hover:scale-105"
           />
           <CustomButton
             title="Sign In"
             href="/authenticate"
             btnType="button"
-            containerStyles="text-white rounded-xl bg-black-100 min-w-w[130px]"
+            containerStyles="text-white rounded-xl bg-black-100 min-w-w[130px] transition-transform transform hover:scale-105"
           />
         </div>
 
