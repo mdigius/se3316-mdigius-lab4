@@ -6,6 +6,8 @@ import Registration from './Registration'
 import Authenticate from './Authenticate'
 import Superheroes from './Superheroes'
 import SuperheroResult from './SuperheroResult'
+import HeroLists from './HeroLists'
+import CreateHeroList from './CreateHeroList'
 
 export {
     Hero,
@@ -15,5 +17,7 @@ export {
     Registration,
     Authenticate,
     Superheroes,
-    SuperheroResult
+    SuperheroResult,
+    HeroLists,
+    CreateHeroList
 }

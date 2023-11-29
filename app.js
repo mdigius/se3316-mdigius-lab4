@@ -28,6 +28,17 @@ app.use(cors());
 const superheroInfo = JSON.parse(fs.readFileSync('superhero_info.json'));
 const superheroPowers = JSON.parse(fs.readFileSync('superhero_powers.json'));
 app.use(express.json());
+app.route('/api/secure/publicLists')
+    .get(async (req, res) => {
+        const listResults = await client.db("Superheroes").collection("Lists").find({public: true}).toArray();
+
+        if(!listResults){
+            return res.status(404).json({ error: 'No public lists available!' });
+        }
+        res.json(listResults.slice(0, 10))
+
+
+    })
 
 app.route('/api/secure/:user/lists')
     .get(async (req, res) => {
@@ -45,14 +56,16 @@ app.route('/api/secure/:user/lists')
         const username = req.params.user
         const heroIDs = req.body.heroIDs
         const listName = req.body.listName
+        const publicList = req.body.publicList
         // Verifies that the request included all proper parameters
-        if(!username || !heroIDs){
+        if(!username || !heroIDs || !listName){
             return res.status(400).json({ error: 'Improper parameters in req body' });
         }
         list = {
             username: username,
             listName: listName,
-            heroIDs: heroIDs
+            heroIDs: heroIDs,
+            publicList: publicList
         }
         client.db("Superheroes").collection("Lists").insertOne(list)
         res.status(201).json({ message: 'Successfully created list' })
