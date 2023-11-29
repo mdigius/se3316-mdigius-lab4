@@ -24,7 +24,7 @@ const Superheroes = () => {
         } else if(searchCriteria == 'publisher'){
             url += 'publisher/' + searchQuery
         } else if(searchCriteria == 'power'){
-            url += 'power/name/' + searchQuery
+            url += 'power/' + searchQuery
         }
         const data = {
             returnN: returnN
@@ -55,7 +55,6 @@ const Superheroes = () => {
             })
             .catch(error => {
                 console.error('Error:', error);
-                // Set an alert if authentication failed
             });
 
 

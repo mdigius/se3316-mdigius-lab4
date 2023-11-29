@@ -7,6 +7,7 @@ export interface CustomButtonProps {
     btnType?: "button" | "submit";
     href?: string;
 }
+// Interface to hold superhero data
 export interface SuperheroData {
     id: number;
     name: string;
