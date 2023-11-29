@@ -4,11 +4,9 @@ import React from 'react'
 import Image from 'next/image'
 import CustomButton from './CustomButton'
 import Link from 'next/link'
+import { Button, Checkbox, Label, Alert, TextInput } from "flowbite-react";
 
 const Hero = () => {
-    const handleScroll = () => {
-
-    }
   return (
     <div className="hero">
         <div className="flex-1 pt-36 padding-x">
@@ -16,16 +14,15 @@ const Hero = () => {
                 HeroHub
             </h1>
             <p>
-                Sign in or register today to view superhero information and create favourite lists!
+                Welcome to HeroHub! Register for an account to create custom superhero lists, or view heroes as a guest!
             </p>
-            <CustomButton
-            title="Register"
-            containerStyles="bg-primary-blue
-            text-white rounded-full mt-10"
-            href = "/register"
-            handleClick = {handleScroll}
             
-             />
+        <Button className="mt-10" gradientDuoTone="cyanToBlue" href="/register">
+            Sign up!
+            </Button>
+            <Button className="mt-10" gradientDuoTone="cyanToBlue" href="/superheroes">
+            View Heroes!
+            </Button>
         </div>
         <div className="hero__image-container">
                 <div className="hero__image">
