@@ -67,14 +67,15 @@ app.route('/api/secure/:user/lists')
         const usernameResult = await client.db("Superheroes").collection("Users").findOne({ username: username });
 
         if (!usernameResult) {
+            
             return res.status(404).json({ error: 'No account with provided username' });
         }
         if(usernameResult.verified == false){
-            return res.status(400).json({ error: 'Account is not verified' });
+            return res.status(400).json('Account is not verified');
 
         }
         if(usernameResult.disabled == true){
-            return res.status(400).json({ error: 'Account is disabled. Contact site administrator' });
+            return res.status(401).json({message: 'Account is disabled. Contact site administrator' });
             
         }
         // Use bcrypt.compare to compare the hashed password with the provided password
@@ -83,7 +84,7 @@ app.route('/api/secure/:user/lists')
         if (isPasswordMatch) {
             res.status(201).json({ message: 'Successfully authenticated user' });
         } else {
-            return res.status(401).json({ error: 'Invalid password' });
+            return res.status(402).json({message: 'Invalid password' });
         }
     })
     .post(async (req, res) => {
@@ -113,7 +114,7 @@ app.route('/api/secure/:user/lists')
             email: email,
             password: hashedPassword,
             disabled: false,
-            verified: false
+            verified: true
         }
         client.db("Superheroes").collection("Users").insertOne(user)
         res.status(201).json({ message: 'Succesfully added user'})
@@ -141,9 +142,13 @@ app.route('/api/superheroInfo/:id')
 // Functionality for searching by name
 app.route('/api/superheroInfo/name/:name')
     .get((req, res) => {
+        const returnN = req.query.returnN;
         const name = req.params.name.toLowerCase();
         const superheroes = superheroInfo.filter((hero) => hero.name.toLowerCase().includes(name));
         if (superheroes.length > 0) {
+            if(returnN){
+                res.json(superheroes.slice(0, returnN))
+            }
             res.json(superheroes);
         } else {
             res.status(404).json({ message: `No existing superhero with name: ${name}` });
@@ -172,6 +177,7 @@ app.route('/api/power/hero/:name')
 // Search functionality to return all hero names with a given power
 app.get('/api/power/:power', (req, res) => {
     const requestedPower = req.params.power.toLowerCase();
+    const returnN = req.query.returnN;
     const heroes = new Set();
 
     superheroPowers.forEach((hero) => {
@@ -190,6 +196,9 @@ app.get('/api/power/:power', (req, res) => {
     });
 
     if (heroes.size > 0) {
+        if(returnN){
+            res.json(Array.from(heroes).slice(0, returnN))
+        }
         res.json(Array.from(heroes));
     } else {
         res.status(404).json({ message: `No existing heroes for power: ${req.params.power}` });
@@ -209,6 +218,7 @@ app.get('/api/publisher', (req, res) => {
 // Returns a list of all heroes from a given publisher
 app.get('/api/publisher/:id', (req, res) => {
     const pub = req.params.id.toLowerCase();
+    const returnN = req.query.returnN;
     const heroes = new Set();
     superheroInfo.forEach((hero) => {
         if (hero.Publisher.toLowerCase().includes(pub)) {
@@ -216,6 +226,9 @@ app.get('/api/publisher/:id', (req, res) => {
         }
     });
     if (heroes.size > 0) {
+        if(returnN){
+            res.json(Array.from(heroes).slice(0, returnN))
+        }
         res.json(Array.from(heroes));
     } else {
         res.status(404).json({ message: `No existing heroes for publisher: ${pub}` });
@@ -234,6 +247,7 @@ app.get('/api/race', (req, res) => {
 // Returns a list of all hero names from a given race
 app.get('/api/race/:id', (req, res) => {
     const race = req.params.id.toLowerCase();
+    const returnN = req.query.returnN;
     const heroes = new Set();
     superheroInfo.forEach((hero) => {
         if (hero.Race.toLowerCase().includes(race)) {
@@ -241,6 +255,9 @@ app.get('/api/race/:id', (req, res) => {
         }
     });
     if (heroes.size > 0) {
+        if(returnN){
+            res.json(Array.from(heroes).slice(0, returnN))
+        }
         res.json(Array.from(heroes));
     } else {
         res.status(404).json({ message: `No existing heroes for race: ${race}` });

@@ -35,6 +35,24 @@ const Authenticate = () => {
             },
         })
             .then(response => {
+                let resCode = response.status
+                console.log(resCode)
+                if(resCode == 404){
+                    setAlertMessage(`Username does not exist`);
+                    setShowAlert(true);
+                } 
+                if(resCode == 400){
+                    setAlertMessage(`Account is not verified!`);
+                    setShowAlert(true);
+                } 
+                if(resCode == 401){
+                    setAlertMessage(`Account is disabled! Contact site admin.`);
+                    setShowAlert(true);
+                }
+                if(resCode == 402){
+                    setAlertMessage(`Incorrect password!`);
+                    setShowAlert(true);
+                }
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
@@ -46,10 +64,7 @@ const Authenticate = () => {
                 router.push('/superheroes')
             })
             .catch(error => {
-                console.error('Error:', error);
-                // Set an alert if authentication failed
-                setAlertMessage(`Error! Incorrect username or password.`);
-                setShowAlert(true);
+                console.error(error)
             });
 
 

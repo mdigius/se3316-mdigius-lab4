@@ -11,6 +11,7 @@ const Superheroes = () => {
     const router = useRouter()
     const [searchCriteria, setSearchCriteria] = useState('name');
     const [searchQuery, setSearchQuery] = useState('');
+    const [returnN, setReturnN] = useState('8');
     async function handleSearch(event: React.FormEvent){
         event.preventDefault()
         var url = "http://localhost:5002/api/"
@@ -23,8 +24,16 @@ const Superheroes = () => {
         } else if(searchCriteria == 'power'){
             url += 'power/name/' + searchQuery
         }
+        const data = {
+            returnN: returnN
+        };
+        // Converts the data to URL params
+        const params = new URLSearchParams(data);
 
-        fetch(url, {
+        // Construct the URL with parameters
+        const urlWithParams = `${url}?${params}`;
+
+        fetch(urlWithParams, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -77,6 +86,25 @@ const Superheroes = () => {
                 shadow
                 onChange={(e) => setSearchQuery(e.target.value)}
                 />
+                <div className="mb-2 block">
+                    <Label value="Results Length" />
+                    <Select id="returnN" defaultValue = '8' onChange={(e) => setReturnN(e.target.value)}>
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                        <option>6</option>
+                        <option>7</option>
+                        <option>8</option>
+                        <option>9</option>
+                        <option>10</option>
+                        <option>11</option>
+                        <option>12</option>
+                        
+                    </Select>
+                </div>
+                
                 <Button outline gradientDuoTone="tealToLime" type="submit">Search!</Button>
             </form>
             <SuperheroResult/>
