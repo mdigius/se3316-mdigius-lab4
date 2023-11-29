@@ -113,6 +113,13 @@ const Authenticate = () => {
                     {/* Conditionally render the Alert component */}
                     {showAlert && <Alert color="failure" icon={HiInformationCircle}>{alertMessage}</Alert>}
                 </form>
+                <div className="mt-10">
+                    <Label value="New here?" />
+                    <Link className="ml-1" href="/register">
+                        <Label className="text-blue-600 font-bold underline cursor-pointer" value="Register"/>
+                    </Link>
+                </div>
+
             </div>
             <div className="hero__image-container">
                 <div className="hero__image flipped">
