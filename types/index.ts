@@ -22,6 +22,11 @@ export interface SuperheroData {
     Weight: number;
   }
 
+export interface AuthManager {
+    username: string;
+    signedIn: boolean;
+}
+
 export interface SuperheroResultProps {
     superheroData: SuperheroData;
 }

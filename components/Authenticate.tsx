@@ -7,6 +7,9 @@ import CustomButton from './CustomButton';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation'
 
+
+
+
 const Authenticate = () => {
     const router = useRouter()
     const [username, setUsername] = useState('');
@@ -25,7 +28,7 @@ const Authenticate = () => {
         };
         // Converts the data to URL params
         const params = new URLSearchParams(data);
-
+        
         // Construct the URL with parameters
         const urlWithParams = `${url}?${params}`;
         fetch(urlWithParams, {
@@ -66,6 +69,7 @@ const Authenticate = () => {
             .catch(error => {
                 console.error(error)
             });
+            
 
 
         

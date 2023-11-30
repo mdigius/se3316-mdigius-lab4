@@ -9,6 +9,7 @@ import SuperheroResult from './SuperheroResult'
 import HeroLists from './HeroLists'
 import CreateHeroList from './CreateHeroList'
 
+
 export {
     Hero,
     CustomButton,
@@ -19,5 +20,5 @@ export {
     Superheroes,
     SuperheroResult,
     HeroLists,
-    CreateHeroList
+    CreateHeroList,
 }

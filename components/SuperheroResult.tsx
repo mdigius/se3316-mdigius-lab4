@@ -30,11 +30,12 @@ const SuperheroResult = ({superheroData}: SuperheroResultProps) => {
             <p>Weight: {superheroData.Weight}</p>
           </div>
           <Button outline gradientDuoTone="purpleToBlue">View Powers!</Button>
-          <Button outline gradientDuoTone="tealToLime">Search on DuckDuckGo!</Button>
+          <Button className="transition-transform transform hover:scale-105" gradientDuoTone="tealToLime" href={`https://duckduckgo.com/?q=${superheroData.name}`} target="_blank">Search on DuckDuckGo!</Button>
         </Card>
       )}
     </div>
   );
 };
+
 
 export default SuperheroResult;

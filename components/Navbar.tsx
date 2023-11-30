@@ -4,6 +4,8 @@ import Image from 'next/image';
 import { CustomButton } from '.';
 
 const Navbar = () => {
+  
+
   return (
     <header className="w-full absolute z-9">
       <nav className="mt-3 bg-blue-300 max-w-[1440px] mx-auto flex justify-between items-center rounded-2xl sm:px-16 px-6 py-4">
@@ -38,6 +40,7 @@ const Navbar = () => {
             btnType="button"
             containerStyles="text-white rounded-xl bg-black-100 min-w-w[130px] transition-transform transform hover:scale-105"
           />
+
         </div>
 
       </nav>

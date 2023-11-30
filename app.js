@@ -6,7 +6,8 @@ const {MongoClient} = require('mongodb')
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const uri = 'mongodb+srv://mdigius:mdigi2012@cluster0.xfcxsn5.mongodb.net/?retryWrites=true&w=majority'
-    
+// Code to kill port: lsof -ti:5002 | xargs kill -9
+ 
 const client = new MongoClient(uri);
 try{
     client.connect();
