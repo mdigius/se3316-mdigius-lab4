@@ -41,11 +41,35 @@ app.route('/api/secure/publicLists')
 
     })
 
+app.route('/api/secure/lists/:listName/heroes')
+    .get(async (req, res) => {
+        const listName = req.params.listName
+        const listResult = await client.db("Superheroes").collection("Lists").findOne({listName: listName});
+
+        if (!listResult) {
+            return res.status(404).json({ error: 'List does not exist' });
+        }
+        
+        const heroResults = new Set()
+        listResult.heroIDs.forEach((myHeroID) => {
+            const superhero = superheroInfo.find((hero) => hero.id === myHeroID)
+            if (superhero) {
+                heroResults.add(superhero);
+            }
+        })
+
+
+
+        res.json(Array.from(heroResults));
+
+    })
+
+
 app.route('/api/secure/:user/lists')
     .get(async (req, res) => {
         const username = req.params.user
         const listResults = await client.db("Superheroes").collection("Lists").find({ username: username }).toArray();
-
+        
         if (!listResults.length>0) {
             return res.status(404).json({ error: 'User has no lists!' });
         }
@@ -55,16 +79,19 @@ app.route('/api/secure/:user/lists')
     })
     .post(async (req, res) => {
         const username = req.params.user
-        const heroIDs = req.body.heroIDs
+        const heroIDs = req.body.heroIDs.split(',').map(id => parseInt(id.trim(), 10));
+        const description = req.body.description
         const listName = req.body.listName
         const publicList = req.body.publicList
         // Verifies that the request included all proper parameters
         if(!username || !heroIDs || !listName){
             return res.status(400).json({ error: 'Improper parameters in req body' });
         }
+    
         list = {
             username: username,
             listName: listName,
+            description: description,
             heroIDs: heroIDs,
             publicList: publicList
         }

@@ -9,6 +9,7 @@ import SuperheroResult from './SuperheroResult'
 import HeroLists from './HeroLists'
 import CreateHeroList from './CreateHeroList'
 import UserDashboard from './UserDashboard'
+import ListResult from './ListResult'
 
 
 
@@ -23,5 +24,6 @@ export {
     SuperheroResult,
     HeroLists,
     CreateHeroList,
-    UserDashboard
+    UserDashboard,
+    ListResult
 }

@@ -22,6 +22,18 @@ export interface SuperheroData {
     Weight: number;
   }
 
+  export interface ListData {
+    username: string;
+    listName: string;
+    description?: string;
+    heroIDs: [number];
+    publicList: boolean;
+  }
+
+  export interface ListResultProps {
+    listData: ListData
+  }
+
 export interface AuthManager {
     username: string;
     signedIn: boolean;

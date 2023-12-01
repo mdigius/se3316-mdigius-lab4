@@ -2,8 +2,11 @@
 import { Alert, Button, Label, TextInput, ToggleSwitch } from 'flowbite-react';
 import React, { useState } from 'react'
 import { HiInformationCircle } from 'react-icons/hi';
-
+import Cookies from 'js-cookie';
+import {useRouter} from 'next/navigation';
 const CreateHeroList = () => {
+  const router = useRouter();
+  const username = Cookies.get("username")
   const [listName, setListName] = useState('');
   const [heroIDs, setHeroIDs] = useState('');
   const [description, setDescription] = useState('');
@@ -13,14 +16,37 @@ const CreateHeroList = () => {
   async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
     // URL to connect to api
-    const url = 'http://localhost:5002/api/secure/';
+    const url = `http://localhost:5002/api/secure/${username}/lists`;
     // Creates json body object to be passed in post request
     const data = {
+        username: username,
         listName: listName,
-        public: switch1,
-        heroIDs: heroIDs
-
+        description: description,
+        heroIDs: heroIDs,
+        publicList: switch1
     };
+    fetch(url, {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+  })
+      .then(response => {
+          if (!response.ok) {
+              throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          return response.json();
+      })
+      .then(responseData => {
+          console.log('POST successful:', responseData);
+          router.push('/lists/public')
+      })
+      .catch(error => {
+          console.error('Error:', error);
+          setAlertMessage(`Error creating list`);
+          setShowAlert(true);
+      });
 
 
   }
@@ -42,7 +68,7 @@ const CreateHeroList = () => {
                         placeholder="Enter List Name"
                         required
                         shadow
-                        onChange={(e) => setHeroIDs(e.target.value)}
+                        onChange={(e) => setListName(e.target.value)}
                       />
                   </div>
                   <div className="mb-2 block">
@@ -62,7 +88,7 @@ const CreateHeroList = () => {
                         placeholder="Example: 240, 55, 76"
                         required
                         shadow
-                        onChange={(e) => setListName(e.target.value)}
+                        onChange={(e) => setHeroIDs(e.target.value)}
                       />
                     </div>
                   <div className="flex max-w-md flex-col gap-4">
