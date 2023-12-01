@@ -1,7 +1,7 @@
 "use client";
 
 import { ListResultProps } from '@/types'
-import { Card } from 'flowbite-react'
+import { Accordion, Card } from 'flowbite-react'
 import React, { useEffect, useState } from 'react'
 import SuperheroResult from "./SuperheroResult";
 import { SuperheroResultProps } from "@/types";
@@ -45,17 +45,28 @@ const ListResult = ({listData}: ListResultProps) => {
                     {listData.listName}
             </h5>
             <p>Made by: {listData.username}</p>
+            {listData.description!='' && 
+                <p>Description: {listData.description}</p>
+                }
             <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                     Heroes:
             </h5>
-            <div className='results' id='results'>
-                {superheroResults.map((result, index) => (
-                    <div key={index} className="transition-transform transform hover:scale-105 max-w-lg">
-                        
-                        <SuperheroResult superheroData={result}/>
+            <Accordion collapseAll>
+              <Accordion.Panel>
+                <Accordion.Title>View List Heroes</Accordion.Title>
+                <Accordion.Content>
+                    <div className='results' id='results'>
+                    {superheroResults.map((result, index) => (
+                        <div key={index} className="transition-transform transform hover:scale-105 max-w-lg">
+                            
+                            <SuperheroResult superheroData={result}/>
+                        </div>
+                    ))}        
                     </div>
-                ))}        
-            </div>
+                </Accordion.Content>
+              </Accordion.Panel>
+            </Accordion>
+           
             
 
             </Card>

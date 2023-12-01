@@ -72,7 +72,7 @@ const CreateHeroList = () => {
                       />
                   </div>
                   <div className="mb-2 block">
-                     <Label value="Description (Optional):" />
+                     <Label value="Description (Optional)" />
                      <TextInput
                         id="description"
                         placeholder="Enter Description"
@@ -82,7 +82,7 @@ const CreateHeroList = () => {
                   </div>
                   
                   <div className="mb-2 block">
-                     <Label value="Hero ID's" />
+                     <Label value="Hero ID's (Comma seperated)" />
                      <TextInput
                         id="heroIDs"
                         placeholder="Example: 240, 55, 76"

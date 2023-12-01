@@ -10,6 +10,8 @@ import HeroLists from './HeroLists'
 import CreateHeroList from './CreateHeroList'
 import UserDashboard from './UserDashboard'
 import ListResult from './ListResult'
+import PersonalLists from './PersonalLists'
+import PersonalListResult from './PersonalListResult'
 
 
 
@@ -25,5 +27,7 @@ export {
     HeroLists,
     CreateHeroList,
     UserDashboard,
-    ListResult
+    ListResult,
+    PersonalLists,
+    PersonalListResult
 }
