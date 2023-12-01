@@ -1,5 +1,5 @@
-
-import React from 'react';
+"use client";
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { CustomButton } from '.';
@@ -8,6 +8,25 @@ import Cookies from 'js-cookie';
 import { get } from 'http';
 
 const Navbar = () => {
+  const [loggedIn, setLoggedIn] = useState('')
+  const [username, setUsername] = useState('')
+  useEffect(() => {
+    const loggedQuery = Cookies.get("loggedin")
+    const userQuery = Cookies.get("username")
+    if(loggedQuery==undefined || loggedQuery == 'false'){
+      setLoggedIn('false')
+    } else {
+      setLoggedIn('true')
+    }
+    if(userQuery==undefined){
+      setUsername('')
+    } else {
+      setUsername(userQuery)
+    }
+    
+  }, [])
+
+  
   return (
     <header className="w-full absolute z-9">
       <nav className="mt-3 bg-blue-300 max-w-[1440px] mx-auto flex justify-between items-center rounded-2xl sm:px-16 px-6 py-4">
@@ -36,7 +55,8 @@ const Navbar = () => {
             btnType="button"
             containerStyles="text-white rounded-xl bg-black-100 min-w-w[130px] transition-transform transform hover:scale-105"
           />
-          {(Cookies.get("loggedin") == "true")  && 
+          
+          {loggedIn == 'true' && 
           <CustomButton
             title="Lists"
             href="/lists/public"
@@ -44,7 +64,15 @@ const Navbar = () => {
             containerStyles="text-white rounded-xl bg-black-100 min-w-w[130px] transition-transform transform hover:scale-105"
           />
           }
-          {(Cookies.get("loggedin") != "true" || Cookies.get('loggedin') == undefined ) && 
+          {loggedIn == 'true' && 
+          <CustomButton
+            title={username}
+            href="/dashboard"
+            btnType="button"
+            containerStyles="text-white rounded-xl bg-black-100 min-w-w[130px] transition-transform transform hover:scale-105"
+          />
+          }
+          {loggedIn == 'false' && 
           <CustomButton
             title="Sign In"
             href="/authenticate"

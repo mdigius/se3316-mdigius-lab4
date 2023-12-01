@@ -11,9 +11,4 @@ export default function middleware(req){
         return NextResponse.redirect("http://localhost:3000/register");
     }
 
-    if (verify && url.includes("/dashboard")) {
-      return
-    }
-
-
 }
