@@ -9,6 +9,7 @@ import SuperheroResult from "./SuperheroResult";
 import { HiInformationCircle } from 'react-icons/hi';
 import { SuperheroResultProps } from "@/types";
 
+
 const Superheroes = () => {
     const router = useRouter()
     const [searchCriteria, setSearchCriteria] = useState('name');

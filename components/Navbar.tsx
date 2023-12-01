@@ -3,6 +3,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { CustomButton } from '.';
 
+import { get } from 'http';
+
 const Navbar = () => {
   
 
@@ -34,13 +36,23 @@ const Navbar = () => {
             btnType="button"
             containerStyles="text-white rounded-xl bg-black-100 min-w-w[130px] transition-transform transform hover:scale-105"
           />
+          {
           <CustomButton
             title="Sign In"
             href="/authenticate"
             btnType="button"
             containerStyles="text-white rounded-xl bg-black-100 min-w-w[130px] transition-transform transform hover:scale-105"
           />
-
+}
+          {
+            <CustomButton
+              title={'Signed in user'}
+              href="/manageUser"
+              btnType="button"
+              containerStyles="text-white rounded-xl bg-black-100 min-w-w[130px] transition-transform transform hover:scale-105"
+            />
+            }
+let verify = req.cookies.get("loggedin");
         </div>
 
       </nav>

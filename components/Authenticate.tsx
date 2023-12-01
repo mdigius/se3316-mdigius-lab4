@@ -1,4 +1,5 @@
 "use client";
+import Cookies from 'js-cookie';
 import { Button, Checkbox, Label, Alert, TextInput } from "flowbite-react";
 import React, { useState } from 'react';
 import Image from 'next/image';
@@ -6,9 +7,6 @@ import { HiInformationCircle } from 'react-icons/hi';
 import CustomButton from './CustomButton';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation'
-
-
-
 
 const Authenticate = () => {
     const router = useRouter()
@@ -64,6 +62,7 @@ const Authenticate = () => {
             .then(responseData => {
                 console.log('POST successful:', responseData);
                 // If succesful authentication, reroute to account page
+                Cookies.set("loggedin", "true");
                 router.push('/superheroes')
             })
             .catch(error => {
