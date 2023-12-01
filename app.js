@@ -31,7 +31,7 @@ const superheroPowers = JSON.parse(fs.readFileSync('superhero_powers.json'));
 app.use(express.json());
 app.route('/api/secure/publicLists')
     .get(async (req, res) => {
-        const listResults = await client.db("Superheroes").collection("Lists").find({public: true}).toArray();
+        const listResults = await client.db("Superheroes").collection("Lists").find({publicList: true}).toArray();
 
         if(!listResults){
             return res.status(404).json({ error: 'No public lists available!' });
