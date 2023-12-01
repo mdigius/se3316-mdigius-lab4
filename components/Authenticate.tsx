@@ -64,8 +64,8 @@ const Authenticate = () => {
                 // If succesful authentication, reroute to account page
                 Cookies.set("loggedin", "true");
                 Cookies.set("username", username);
-                console.log(Cookies.get("username"))
                 router.push('/superheroes')
+
             })
             .catch(error => {
                 console.error(error)

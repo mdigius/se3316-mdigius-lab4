@@ -4,8 +4,10 @@ import React, { useState } from 'react'
 import { HiInformationCircle } from 'react-icons/hi';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation'
+
 const UserDashboard = () => {
   const router = useRouter()
+
   const [newPassword, setNewPassword] = useState('');
   const [currentPassword, setCurrentPassword] = useState('');
   const [showAlert, setShowAlert] = useState(false); // State to manage alert visibility
@@ -16,7 +18,7 @@ const UserDashboard = () => {
   async function handleLogout(){
     Cookies.set('username', '')
     Cookies.set('loggedin', 'false')
-    router.push('/')
+
   }
   return (
     <div className="hero">
@@ -54,9 +56,10 @@ const UserDashboard = () => {
                     {/* Conditionally render the Alert component */}
                     {showAlert && <Alert color="failure" icon={HiInformationCircle}>{alertMessage}</Alert>}
             </form>
-            <form onSubmit={handleLogout}>
-            <Button className="mt-10 transition-transform transform hover:scale-105" gradientDuoTone="tealToLime" type="submit">Logout</Button>
-            </form>
+            
+            <Button href='/authenticate' onClick={handleLogout} className="mt-10 transition-transform transform hover:scale-105 max-w-md" gradientDuoTone="tealToLime" type="submit">
+              Logout</Button>
+            
       </div>
     </div>
   )

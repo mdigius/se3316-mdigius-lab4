@@ -17,6 +17,7 @@ const CreateHeroList = () => {
     const data = {
         listName: listName,
         public: switch1,
+        heroIDs: heroIDs
 
     };
 
