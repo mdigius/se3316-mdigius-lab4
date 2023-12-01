@@ -99,9 +99,6 @@ const PersonalListResult = ({listData}: ListResultProps) => {
             {listData.description!='' && 
                 <p>Description: {listData.description}</p>
                 }
-            <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                    Heroes:
-            </h5>
             <Accordion collapseAll>
                 <Accordion.Panel>
                     <Accordion.Title>

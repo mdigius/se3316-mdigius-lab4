@@ -1,4 +1,5 @@
 "use client";
+import Image from 'next/image';
 import { Alert, Button, Label, TextInput } from 'flowbite-react'
 import React, { useState } from 'react'
 import { HiInformationCircle } from 'react-icons/hi';
@@ -55,10 +56,17 @@ const UserDashboard = () => {
                     {showAlert && <Alert color="failure" icon={HiInformationCircle}>{alertMessage}</Alert>}
             </form>
             
-            <Button href='/authenticate' onClick={handleLogout} className="mt-10 transition-transform transform hover:scale-105 max-w-md" gradientDuoTone="tealToLime" type="submit">
+            <Button href='/authenticate' onClick={handleLogout} className="mt-10 transition-transform transform hover:scale-105 max-w-md" color="failure" type="submit">
               Logout</Button>
             
       </div>
+      <div className="hero__image-container">
+                <div className="hero__image">
+                    <Image src="/scorpion.png" alt="hero"
+                        fill className="object-contain"
+                    />
+                </div>
+            </div>
     </div>
   )
 }

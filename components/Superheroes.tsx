@@ -1,7 +1,7 @@
 "use client";
 import {Button, TextInput, Select, Label, Alert}from "flowbite-react";
 import { useRouter } from 'next/navigation'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 import CustomButton from './CustomButton'
 import Link from 'next/link'
@@ -68,6 +68,7 @@ const Superheroes = () => {
 
 
     }
+    
   return (
     <div className="hero">
         <div className="flex-1 pt-36 padding-x">

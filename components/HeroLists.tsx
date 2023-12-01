@@ -1,4 +1,5 @@
 "use client";
+import Image from 'next/image';
 import { Button } from 'flowbite-react'
 import React, { useEffect, useState } from 'react'
 import ListResult from './ListResult';
@@ -60,7 +61,13 @@ const HeroLists = () => {
                 ))} 
           </div>
                  
-         
+          <div className="hero__image-container mt-10">
+                <div className="hero__image mt-10">
+                    <Image src="/batman.png" alt="hero"
+                        fill className="object-contain mt-10"
+                    />
+                </div>
+            </div>
 
     </div>
   )
