@@ -1,13 +1,13 @@
+
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { CustomButton } from '.';
+import Cookies from 'js-cookie';
 
 import { get } from 'http';
 
 const Navbar = () => {
-  
-
   return (
     <header className="w-full absolute z-9">
       <nav className="mt-3 bg-blue-300 max-w-[1440px] mx-auto flex justify-between items-center rounded-2xl sm:px-16 px-6 py-4">
@@ -36,23 +36,23 @@ const Navbar = () => {
             btnType="button"
             containerStyles="text-white rounded-xl bg-black-100 min-w-w[130px] transition-transform transform hover:scale-105"
           />
-          {
+          {(Cookies.get("loggedin") == "true")  && 
+          <CustomButton
+            title="Lists"
+            href="/lists/public"
+            btnType="button"
+            containerStyles="text-white rounded-xl bg-black-100 min-w-w[130px] transition-transform transform hover:scale-105"
+          />
+          }
+          {(Cookies.get("loggedin") != "true" || Cookies.get('loggedin') == undefined ) && 
           <CustomButton
             title="Sign In"
             href="/authenticate"
             btnType="button"
             containerStyles="text-white rounded-xl bg-black-100 min-w-w[130px] transition-transform transform hover:scale-105"
           />
-}
-          {
-            <CustomButton
-              title={'Signed in user'}
-              href="/manageUser"
-              btnType="button"
-              containerStyles="text-white rounded-xl bg-black-100 min-w-w[130px] transition-transform transform hover:scale-105"
-            />
-            }
-let verify = req.cookies.get("loggedin");
+          }
+
         </div>
 
       </nav>
