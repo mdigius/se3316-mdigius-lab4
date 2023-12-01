@@ -6,6 +6,7 @@ import { HiInformationCircle } from 'react-icons/hi';
 const CreateHeroList = () => {
   const [listName, setListName] = useState('');
   const [heroIDs, setHeroIDs] = useState('');
+  const [description, setDescription] = useState('');
   const [switch1, setSwitch1] = useState(false);
   const [showAlert, setShowAlert] = useState(false); 
   const [alertMessage, setAlertMessage] = useState(''); 
@@ -42,6 +43,15 @@ const CreateHeroList = () => {
                         required
                         shadow
                         onChange={(e) => setHeroIDs(e.target.value)}
+                      />
+                  </div>
+                  <div className="mb-2 block">
+                     <Label value="Description (Optional):" />
+                     <TextInput
+                        id="description"
+                        placeholder="Enter Description"
+                        shadow
+                        onChange={(e) => setDescription(e.target.value)}
                       />
                   </div>
                   

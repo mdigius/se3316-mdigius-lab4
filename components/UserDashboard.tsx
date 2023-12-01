@@ -13,12 +13,10 @@ const UserDashboard = () => {
   const [showAlert, setShowAlert] = useState(false); // State to manage alert visibility
   const [alertMessage, setAlertMessage] = useState(''); // State to manage alert message
   async function handleSubmit(event: React.FormEvent){
-
   }
   async function handleLogout(){
     Cookies.set('username', '')
     Cookies.set('loggedin', 'false')
-
   }
   return (
     <div className="hero">
@@ -32,7 +30,7 @@ const UserDashboard = () => {
                   <div className="mb-2 block">
                      <Label value="Current Password:" />
                      <TextInput
-                        id="listname"
+                        id="currentPswd"
                         placeholder="Enter Current Password"
                         required
                         shadow
@@ -43,7 +41,7 @@ const UserDashboard = () => {
                   <div className="mb-2 block">
                      <Label value="New Password:" />
                      <TextInput
-                        id="newPassword"
+                        id="newPswd"
                         placeholder="Enter New Password"
                         required
                         shadow
@@ -64,5 +62,4 @@ const UserDashboard = () => {
     </div>
   )
 }
-
 export default UserDashboard
