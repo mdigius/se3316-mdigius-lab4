@@ -44,7 +44,10 @@ app.route('/api/reviews/:listName')
             reviewResults.forEach(review => {
                 counter+=review.selectedStars
             })
-            return res.json(counter)
+            
+            const averageStars = Math.round(counter / reviewResults.length);
+
+            return res.json(averageStars);
         }
 
 
