@@ -30,6 +30,8 @@ const superheroInfo = JSON.parse(fs.readFileSync('superhero_info.json'));
 const superheroPowers = JSON.parse(fs.readFileSync('superhero_powers.json'));
 app.use(express.json());
 
+
+
 app.route('/api/secure/:user/modify')
     .post(async (req, res) => {
         const username = req.params.user
@@ -141,6 +143,19 @@ app.route('/api/secure/:user/lists')
         }
         
         
+    })
+    .delete(async (req, res) => {
+        const listName = req.body.listName
+        const listResult = await client.db("Superheroes").collection("Lists").findOne({ listName: listName });
+        if(!listName){
+            return res.status(400).json({ error: 'Improper parameters in req body' });
+        }
+        if(!listResult){
+            return res.status(404).json({ error: 'List doesnt exist'});
+        }
+
+        client.db("Superheroes").collection("Lists").deleteOne({listName: listName})
+        res.status(201).json({ message: 'Successfully deleted list' })
     })
 
     app.route('/api/secure/')

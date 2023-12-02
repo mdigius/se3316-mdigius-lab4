@@ -83,6 +83,31 @@ const PersonalListResult = ({listData}: ListResultProps) => {
 
     }
     async function deleteList(){
+        var url = `http://localhost:5002/api/secure/${username}/lists`
+        const data = {
+            listName: listData.listName
+        }
+        fetch(url, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(responseData => {
+                console.log('Successfully deleted list');
+                window.location.reload()
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+
 
     }
     
