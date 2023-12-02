@@ -21,6 +21,11 @@ export interface SuperheroData {
     Alignment: string;
     Weight: number;
   }
+  
+  export interface UserDataForAdmin{
+    username: string,
+    disabled: boolean
+  }
 
   export interface ListData {
     username: string;
@@ -39,6 +44,8 @@ export interface SuperheroData {
     hidden: boolean
   }
 
+
+
   export interface ListResultProps {
     listData: ListData
   }
@@ -46,6 +53,9 @@ export interface SuperheroData {
 export interface AuthManager {
     username: string;
     signedIn: boolean;
+}
+export interface UserDataForAdminProps {
+  userDataForAdmin: UserDataForAdmin
 }
 export interface ReviewProps {
   reviewData: ReviewData

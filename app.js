@@ -29,6 +29,46 @@ app.use(cors());
 const superheroInfo = JSON.parse(fs.readFileSync('superhero_info.json'));
 const superheroPowers = JSON.parse(fs.readFileSync('superhero_powers.json'));
 app.use(express.json());
+
+app.route('/api/admin/users')
+    .get(async (req, res) => {
+        const userResults = await client.db("Superheroes").collection("Users").find().toArray()
+
+        if(!userResults){
+            return res.status(404).json({ error: 'No users!' });
+        }
+        const users = new Set()
+        userResults.forEach(user => {
+            const result = {
+                username: user.username,
+                disabled: user.disabled
+            }
+            users.add(result)
+        })
+
+        res.json(Array.from(users))
+
+    })
+    
+    .post(async (req, res) => {
+        const username = req.body.username
+        const disabled = req.body.disabled
+        const userResult = await client.db("Superheroes").collection("Users").findOne({username: username})
+        if (!userResult) {
+            return res.status(404).json({ error: 'User does not exist' });
+        }
+
+        await client.db("Superheroes").collection("Users").updateOne(
+            { username: username },
+            { $set: { disabled: disabled } }
+        );
+
+        res.status(201).json({message: 'Successfully modified users disabled status'})
+
+
+    })
+
+
 app.route('/api/reviews/:listName')
     .get(async (req, res) => {
         const listName = req.params.listName

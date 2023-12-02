@@ -14,6 +14,7 @@ import PersonalLists from './PersonalLists'
 import PersonalListResult from './PersonalListResult'
 import Review from './Review'
 import AdminDashboard from './AdminDashboard'
+import AdminDisableUser from './AdminDisableUser'
 
 export {
     Hero,
@@ -31,5 +32,6 @@ export {
     PersonalLists,
     PersonalListResult,
     Review,
-    AdminDashboard
+    AdminDashboard,
+    AdminDisableUser
 }
