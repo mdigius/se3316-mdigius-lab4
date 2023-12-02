@@ -44,11 +44,11 @@ const HeroLists = () => {
               Create a list or view and rate public lists below!
             </h2>
             <Button className="transition-transform transform hover:scale-105 max-w-sm mt-10" 
-            gradientDuoTone="tealToLime" href='/lists/create'>
+            gradientDuoTone="purpleToPink" href='/lists/create'>
               Create List!
             </Button>
             <Button className="transition-transform transform hover:scale-105 max-w-sm mt-10" 
-            gradientDuoTone="tealToLime" href='/lists/personal'>
+            gradientDuoTone="purpleToPink" href='/lists/personal'>
               View Personal Lists!
             </Button>
             <h1 className="hero__title mt-10">
@@ -61,10 +61,10 @@ const HeroLists = () => {
                 ))} 
           </div>
                  
-          <div className="hero__image-container mt-10">
-                <div className="hero__image mt-10">
-                    <Image src="/batman.png" alt="hero"
-                        fill className="object-contain mt-10"
+          <div className="hero__image-container">
+                <div className="hero__image flipped -mr-9">
+                    <Image src="/spiderman.png" alt="hero"
+                        fill className="object-contain"
                     />
                 </div>
             </div>

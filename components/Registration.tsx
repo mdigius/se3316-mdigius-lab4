@@ -108,8 +108,8 @@ const Registration = () => {
                 
             </div>
             <div className="hero__image-container">
-                <div className="hero__image flipped">
-                    <Image src="/antman.png" alt="hero"
+                <div className="hero__image">
+                    <Image src="/ironman.png" alt="hero"
                         fill className="object-contain"
                     />
                 </div>

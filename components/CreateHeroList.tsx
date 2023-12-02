@@ -23,7 +23,8 @@ const CreateHeroList = () => {
         listName: listName,
         description: description,
         heroIDs: heroIDs,
-        publicList: switch1
+        publicList: switch1,
+        isUpdate: false
     };
     fetch(url, {
       method: 'POST',

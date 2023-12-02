@@ -62,16 +62,14 @@ const PersonalLists = () => {
               Create a new list or modify an existing one below!
             </h2>
             <Button className="transition-transform transform hover:scale-105 max-w-sm mt-10" 
-            gradientDuoTone="tealToLime" href='/lists/create'>
+            gradientDuoTone="purpleToPink" href='/lists/create'>
               Create List!
             </Button>
             <Button className="transition-transform transform hover:scale-105 max-w-sm mt-10" 
-            gradientDuoTone="tealToLime" href='/lists/public'>
+            gradientDuoTone="purpleToPink" href='/lists/public'>
               View Public Lists!
             </Button>
-            <h1 className="hero__title mt-10">
-                My Lists:
-            </h1>
+            
             {username!='' && listResults.map((result, index) => (
                     <div key={index} className="transition-transform transform hover:scale-105">
                         <PersonalListResult listData={result}/>

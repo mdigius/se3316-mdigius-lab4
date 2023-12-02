@@ -17,17 +17,17 @@ const Hero = () => {
                 Welcome to HeroHub! Register for an account to create custom superhero lists, or view heroes as a guest!
             </p>
             
-        <Button className="mt-10 transition-transform transform hover:scale-105" gradientDuoTone="cyanToBlue" href="/register">
+        <Button className="mt-10 transition-transform transform hover:scale-105" gradientDuoTone="purpleToPink" href="/register">
             Sign up!
             </Button>
-            <Button className="mt-10 transition-transform transform hover:scale-105" gradientDuoTone="cyanToBlue" href="/superheroes">
+            <Button className="mt-10 transition-transform transform hover:scale-105" gradientDuoTone="purpleToPink" href="/superheroes">
             View Heroes!
             </Button>
         </div>
         <div className="hero__image-container">
                 <div className="hero__image">
-                    <Image src="/deadpool.png" alt="hero" 
-                    fill className="object-contain"
+                    <Image src="/deadpool2.png" alt="hero" 
+                    fill className="object-contain mt-10"
                     />
                 </div>
              </div>

@@ -29,6 +29,41 @@ app.use(cors());
 const superheroInfo = JSON.parse(fs.readFileSync('superhero_info.json'));
 const superheroPowers = JSON.parse(fs.readFileSync('superhero_powers.json'));
 app.use(express.json());
+
+app.route('/api/secure/:user/modify')
+    .post(async (req, res) => {
+        const username = req.params.user
+        const currentPassword = req.body.currentPassword
+        const newPassword = req.body.newPassword
+
+        const usernameResult = await client.db("Superheroes").collection("Users").findOne({ username: username });
+
+        if (!usernameResult) {
+            return res.status(404).json({ error: 'No account with the provided username' });
+        }
+
+        if (!usernameResult.verified) {
+            return res.status(400).json({ error: 'Account is not verified' });
+        }
+
+        // Use bcrypt.compare to compare the hashed password with the provided password
+        const isPasswordMatch = await bcrypt.compare(currentPassword, usernameResult.password);
+
+        if (isPasswordMatch) {
+            // Hash the new password before updating it in the database
+            const hashedNewPassword = await bcrypt.hash(newPassword, saltRounds);
+
+            await client.db("Superheroes").collection("Users").updateOne(
+                { username: username },
+                { $set: { password: hashedNewPassword } }
+            );
+
+            return res.status(201).json({ message: 'Successfully Updated Password' });
+        } else {
+            return res.status(401).json({ message: 'Incorrect password' });
+        }
+    });
+
 app.route('/api/secure/publicLists')
     .get(async (req, res) => {
         const listResults = await client.db("Superheroes").collection("Lists").find({publicList: true}).toArray();
@@ -79,10 +114,11 @@ app.route('/api/secure/:user/lists')
     })
     .post(async (req, res) => {
         const username = req.params.user
-        const heroIDs = req.body.heroIDs.split(',').map(id => parseInt(id.trim(), 10));
+        const heroIDs = req.body.heroIDs
         const description = req.body.description
         const listName = req.body.listName
         const publicList = req.body.publicList
+        const isUpdate = req.body.isUpdate
         // Verifies that the request included all proper parameters
         if(!username || !heroIDs || !listName){
             return res.status(400).json({ error: 'Improper parameters in req body' });
@@ -92,11 +128,18 @@ app.route('/api/secure/:user/lists')
             username: username,
             listName: listName,
             description: description,
-            heroIDs: heroIDs,
-            publicList: publicList
+            heroIDs: heroIDs.split(',').map(id => parseInt(id.trim(), 10)),
+            publicList: publicList,
+            
         }
-        client.db("Superheroes").collection("Lists").insertOne(list)
-        res.status(201).json({ message: 'Successfully created list' })
+        if(!isUpdate){
+            client.db("Superheroes").collection("Lists").insertOne(list)
+            res.status(201).json({ message: 'Successfully created list' })
+        } else {
+            client.db("Superheroes").collection("Lists").updateOne({listName: listName}, {$set: list})
+            res.status(201).json({ message: 'Successfully updated list' })
+        }
+        
         
     })
 

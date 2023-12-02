@@ -122,7 +122,7 @@ const Superheroes = () => {
                     </Select>
                 </div>
                 
-                <Button className="transition-transform transform hover:scale-105" outline gradientDuoTone="tealToLime" type="submit">Search!</Button>
+                <Button className="transition-transform transform hover:scale-105" gradientDuoTone="purpleToPink" type="submit">Search!</Button>
                 {showAlert && <Alert color="failure" icon={HiInformationCircle}>{alertMessage}</Alert>}
             </form>
             <div className='results' id='results'>
@@ -140,7 +140,7 @@ const Superheroes = () => {
         <div className="hero__image-container">
                 <div className="hero__image">
                     <Image src="/blackpanther.png" alt="hero" 
-                    fill className="object-contain"
+                    fill className="object-contain mt-8"
                     />
 
                 </div>

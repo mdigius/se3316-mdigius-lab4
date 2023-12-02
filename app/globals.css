@@ -4,10 +4,82 @@
 @tailwind components;
 @tailwind utilities;
 
+
+@keyframes animateBefore {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(200px) scale(0.8);
+
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes animateAfter{
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(-250px) scale(1.2);
+
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
+  --secondary-glow: conic-gradient(
+    from 10deg at 50% 50%,
+    #eb7494 0deg,
+    #ae77b2 55deg,
+    #97b5da 120deg,
+    #0099ca 160deg,
+    transparent 360deg
+  );
+
+  --third-glow: conic-gradient(
+    from 90deg at 50% 50%,
+    #ff8b7e 0deg,
+    #e24e6b 160deg,
+    #7ed2da 120deg,
+    #8bdce0 55deg,
+    transparent 360deg
+  );
+}
+body::before,
+body::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  opacity:0.8
+}
+body::before {
+  background: var(--third-glow);
+  border-radius: 50%;
+  width: 50vw;
+  height: 50vw;
+  margin-left: -200px;
+  filter:blur(90px);  
+  top: calc(50vh - 50vw/2);
+  left: calc(50vw );
+  animation: animateBefore 7s cubic-bezier(0.47, 0, 0.745, 0.715) infinite;
+}
+
+body::after {
+  background: var(--secondary-glow);
+  border-radius: 50%;
+  width: 500px;
+  height: 700px;
+  filter:blur(90px);
+  top: calc(50vh - 50vw/2);
+  left: calc(50vw - 50vw/2);
+  animation: animateAfter 7s cubic-bezier(0.47, 0, 0.745, 0.715) infinite;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -43,9 +115,9 @@
   @apply flex justify-between items-center;
 }
 
-body {
+/* body {
   color: rgb(var(--foreground-rgb));
-}
+} */
 .custom-btn {
   @apply flex flex-row relative justify-center items-center py-3 px-6 outline-none z-10;
 }

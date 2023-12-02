@@ -131,9 +131,9 @@ const Authenticate = () => {
 
             </div>
             <div className="hero__image-container">
-                <div className="hero__image flipped">
+                <div className="hero__image flipped -mr-10">
                     <Image src="/venom.png" alt="hero"
-                        fill className="object-contain"
+                        fill className="object-contain mt-10"
                     />
                 </div>
             </div>

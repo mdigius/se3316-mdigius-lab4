@@ -12,9 +12,9 @@ const PersonalListResult = ({listData}: ListResultProps) => {
     const router = useRouter();
     const username = Cookies.get("username")
     const [superheroResults, setSuperheroResults] = useState([]);
-    const [listName, setListName] = useState('');
-    const [heroIDs, setHeroIDs] = useState('');
-    const [description, setDescription] = useState('');
+    const [listName, setListName] = useState(listData.listName);
+    const [heroIDs, setHeroIDs] = useState(listData.heroIDs.join(', '))
+    const [description, setDescription] = useState(listData.description);
     const [switch1, setSwitch1] = useState(listData.publicList);
     const [showAlert, setShowAlert] = useState(false); 
     const [alertMessage, setAlertMessage] = useState(''); 
@@ -28,7 +28,8 @@ const PersonalListResult = ({listData}: ListResultProps) => {
                     listName: listName,
                     description: description,
                     heroIDs: heroIDs,
-                    publicList: switch1
+                    publicList: switch1,
+                    isUpdate: true
                 };
                 fetch(url, {
                 method: 'POST',
@@ -112,7 +113,7 @@ const PersonalListResult = ({listData}: ListResultProps) => {
                         id="listname"
                         placeholder="Enter List Name"
                         required
-                        value={listData.listName}
+                        value={listName}
                         shadow
                         onChange={(e) => setListName(e.target.value)}
                       />
@@ -121,7 +122,7 @@ const PersonalListResult = ({listData}: ListResultProps) => {
                      <Label value="Description (Optional)" />
                      <TextInput
                         id="description"
-                        value={listData.description}
+                        value={description}
                         placeholder="Enter Description"
                         shadow
                         onChange={(e) => setDescription(e.target.value)}
@@ -133,7 +134,7 @@ const PersonalListResult = ({listData}: ListResultProps) => {
                      <TextInput
                         id="heroIDs"
                         placeholder="Example: 240, 55, 76"
-                        value={listData.heroIDs.map(id=>String(id))}
+                        value={heroIDs}
                         required
                         shadow
                         onChange={(e) => setHeroIDs(e.target.value)}
@@ -143,8 +144,8 @@ const PersonalListResult = ({listData}: ListResultProps) => {
                     <ToggleSwitch checked={switch1} label="Public List?" onChange={setSwitch1}>
                     </ToggleSwitch>
                   </div>
-                  <Button className="mt-5 transition-transform transform hover:scale-105" outline gradientDuoTone="redToYellow" type="submit">Update List</Button>
-                  <Button className="mt-5 transition-transform transform hover:scale-105" color="failure" onClick={deleteList}>Delete List</Button>
+                  <Button className="mt-5 transition-transform transform hover:scale-105" gradientMonochrome="success" type="submit">Update List</Button>
+                  <Button className="mt-5 transition-transform transform hover:scale-105" gradientMonochrome="failure" onClick={deleteList}>Delete List</Button>
                     {/* Conditionally render the Alert component */}
                     {showAlert && <Alert color="failure" icon={HiInformationCircle}>{alertMessage}</Alert>}
             </form>
