@@ -28,6 +28,7 @@ export interface SuperheroData {
     description?: string;
     heroIDs: [number];
     publicList: boolean;
+    date: Date
   }
 
   export interface ListResultProps {

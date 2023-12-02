@@ -51,6 +51,7 @@ const ListResult = ({listData}: ListResultProps) => {
            
             <p>Number of heroes: {listData.heroIDs.length}</p>
             <p>Made by: {listData.username}</p>
+            <p>Last modified: {new Date(listData.date).toLocaleString()}</p>
             <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                     Heroes:
             </h5>

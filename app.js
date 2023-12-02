@@ -115,34 +115,36 @@ app.route('/api/secure/:user/lists')
 
     })
     .post(async (req, res) => {
-        const username = req.params.user
-        const heroIDs = req.body.heroIDs
-        const description = req.body.description
-        const listName = req.body.listName
-        const publicList = req.body.publicList
-        const isUpdate = req.body.isUpdate
+        const username = req.params.user;
+        const heroIDs = req.body.heroIDs;
+        const description = req.body.description;
+        const listName = req.body.listName;
+        const publicList = req.body.publicList;
+        const isUpdate = req.body.isUpdate;
+    
         // Verifies that the request included all proper parameters
-        if(!username || !heroIDs || !listName){
+        if (!username || !heroIDs || !listName) {
             return res.status(400).json({ error: 'Improper parameters in req body' });
         }
     
-        list = {
+        const currentDate = new Date(); // Get the current date
+    
+        const list = {
             username: username,
             listName: listName,
             description: description,
             heroIDs: heroIDs.split(',').map(id => parseInt(id.trim(), 10)),
             publicList: publicList,
-            
-        }
-        if(!isUpdate){
-            client.db("Superheroes").collection("Lists").insertOne(list)
-            res.status(201).json({ message: 'Successfully created list' })
+            date: currentDate, // Add the current date to the list
+        };
+    
+        if (!isUpdate) {
+            await client.db("Superheroes").collection("Lists").insertOne(list);
+            res.status(201).json({ message: 'Successfully created list' });
         } else {
-            client.db("Superheroes").collection("Lists").updateOne({listName: listName}, {$set: list})
-            res.status(201).json({ message: 'Successfully updated list' })
+            await client.db("Superheroes").collection("Lists").updateOne({ listName: listName }, { $set: list });
+            res.status(201).json({ message: 'Successfully updated list' });
         }
-        
-        
     })
     .delete(async (req, res) => {
         const listName = req.body.listName
