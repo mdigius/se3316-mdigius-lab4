@@ -12,6 +12,7 @@ import UserDashboard from './UserDashboard'
 import ListResult from './ListResult'
 import PersonalLists from './PersonalLists'
 import PersonalListResult from './PersonalListResult'
+import Review from './Review'
 
 
 
@@ -29,5 +30,6 @@ export {
     UserDashboard,
     ListResult,
     PersonalLists,
-    PersonalListResult
+    PersonalListResult,
+    Review
 }

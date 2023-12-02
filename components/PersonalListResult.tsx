@@ -121,10 +121,11 @@ const PersonalListResult = ({listData}: ListResultProps) => {
             <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                     {listData.listName}
             </h5>
-            <p>Made by: {listData.username}</p>
             {listData.description!='' && 
                 <p>Description: {listData.description}</p>
                 }
+            <p>Number of heroes: {listData.heroIDs.length}</p>
+            <p>Last modified: {new Date(listData.date).toLocaleString()}</p>
             <Accordion collapseAll>
                 <Accordion.Panel>
                     <Accordion.Title>

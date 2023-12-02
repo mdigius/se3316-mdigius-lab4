@@ -30,7 +30,44 @@ const superheroInfo = JSON.parse(fs.readFileSync('superhero_info.json'));
 const superheroPowers = JSON.parse(fs.readFileSync('superhero_powers.json'));
 app.use(express.json());
 
+app.route('/api/secure/reviews/:listName')
+    .get(async (req, res) => {
+        const listName = req.params.listName
+        const reviewResults = await client.db("Superheroes").collection("Reviews").find({listName: listName}).toArray()
+        if(!reviewResults){
+            return res.status(404).json({ error: 'List has no reviews' });
+        } else {
+            res.json(reviewResults)
+        }
+    })
+    .post(async (req,res) => {
+        const listName = req.params.listName
+        const author = req.body.author
+        const selectedStars = req.body.selectedStars
+        const comment = req.body.comment
+        const listResult = await client.db("Superheroes").collection("Lists").findOne({listName: listName})
+        if (!listResult) {
+            return res.status(404).json({ error: 'List does not exist' });
+        }
 
+        const reviewResult = await client.db("Superheroes").collection("Reviews").findOne({listName: listName, author: author})
+
+        if(reviewResult){
+            return res.status(404).json({ error: 'User has already left a review' });
+        }
+
+        const review = {
+            listName: listName,
+            author: author,
+            selectedStars: selectedStars,
+            comment: comment,
+            hidden: false
+        }
+
+        client.db("Superheroes").collection("Reviews").insertOne(review)
+
+
+    })
 
 app.route('/api/secure/:user/modify')
     .post(async (req, res) => {
@@ -66,17 +103,25 @@ app.route('/api/secure/:user/modify')
         }
     });
 
-app.route('/api/secure/publicLists')
+    app.route('/api/secure/publicLists')
     .get(async (req, res) => {
-        const listResults = await client.db("Superheroes").collection("Lists").find({publicList: true}).toArray();
+        try {
+            const listResults = await client.db("Superheroes").collection("Lists")
+                .find({ publicList: true })
+                .sort({ date: -1 }) // Sort by date in descending order
+                .toArray();
 
-        if(!listResults){
-            return res.status(404).json({ error: 'No public lists available!' });
+            if (!listResults || listResults.length === 0) {
+                return res.status(404).json({ error: 'No public lists available!' });
+            }
+
+            res.json(listResults.slice(0, 10));
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: 'Internal Server Error' });
         }
-        res.json(listResults.slice(0, 10))
+    });
 
-
-    })
 
 app.route('/api/secure/lists/:listName/heroes')
     .get(async (req, res) => {

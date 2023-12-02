@@ -31,6 +31,14 @@ export interface SuperheroData {
     date: Date
   }
 
+  export interface ReviewData {
+    listName: string,
+    author: string,
+    comment?: string,
+    selectedStars: number,
+    hidden: boolean
+  }
+
   export interface ListResultProps {
     listData: ListData
   }
@@ -39,7 +47,9 @@ export interface AuthManager {
     username: string;
     signedIn: boolean;
 }
-
+export interface ReviewProps {
+  reviewData: ReviewData
+}
 export interface SuperheroResultProps {
     superheroData: SuperheroData;
 }
