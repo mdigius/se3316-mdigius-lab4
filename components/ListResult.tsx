@@ -16,7 +16,7 @@ const ListResult = ({listData}: ListResultProps) => {
     const [selectedStars, setSelectedStars] = useState(3);
     const [showAlert, setShowAlert] = useState(false); 
     const [alertMessage, setAlertMessage] = useState(''); 
-
+    const [totalStars, setTotalStars] = useState(0)
     const handleStarClick = (index: number) => {
         // Update the number of selected stars when a star is clicked
         setSelectedStars(index + 1);
@@ -71,10 +71,36 @@ const ListResult = ({listData}: ListResultProps) => {
             });
 
     }
+    async function fetchTotalStars(){
+        var url = `http://localhost:5002/api/reviews/${listData.listName}`
+        fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(responseData => {
+                console.log('Successfully retrieved heroes');
+                // If succesful authentication, reroute to account page
+                setTotalStars(responseData)
+            })
+            .catch(error => {
+                setTotalStars(0)
+                console.error('Error:', error);
+            });
+
+    }
     
     useEffect(()=> {
         fetchHeroes()
         fetchReviews()
+        fetchTotalStars()
     }, []);
     async function handleSubmitReview(event: React.FormEvent){
         event.preventDefault()
@@ -149,12 +175,13 @@ const ListResult = ({listData}: ListResultProps) => {
                     Rating:
             </h5>
             <Rating size="lg">
-                <Rating.Star />
-                <Rating.Star />
-                <Rating.Star />
-                <Rating.Star />
-                <Rating.Star filled={false} />
-            </Rating>
+                    {[...Array(5)].map((_, index) => (
+                    <Rating.Star
+                        key={index}
+                        filled={index < totalStars}
+                    />
+                    ))}
+                </Rating>
             <Accordion collapseAll>
             <Accordion.Panel>
                 <Accordion.Title>View reviews</Accordion.Title>

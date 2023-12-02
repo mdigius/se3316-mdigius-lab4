@@ -29,7 +29,26 @@ app.use(cors());
 const superheroInfo = JSON.parse(fs.readFileSync('superhero_info.json'));
 const superheroPowers = JSON.parse(fs.readFileSync('superhero_powers.json'));
 app.use(express.json());
+app.route('/api/reviews/:listName')
+    .get(async (req, res) => {
+        const listName = req.params.listName
+        var counter = 0
+        const listResult = await client.db("Superheroes").collection("Lists").findOne({listName: listName})
+        if (!listResult) {
+            return res.status(404).json({ error: 'List does not exist' });
+        }
+        const reviewResults = await client.db("Superheroes").collection("Reviews").find({listName: listName}).toArray()
+        if(!reviewResults){
+            return res.json(counter)
+        } else {
+            reviewResults.forEach(review => {
+                counter+=review.selectedStars
+            })
+            return res.json(counter)
+        }
 
+
+    })
 app.route('/api/secure/reviews/:listName')
     .get(async (req, res) => {
         const listName = req.params.listName
