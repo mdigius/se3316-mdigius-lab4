@@ -37,7 +37,7 @@ const SuperheroResult = ({superheroData}: SuperheroResultProps) => {
             
           </div>
           <Button gradientDuoTone="purpleToBlue">View Powers!</Button>
-          <Button className="transition-transform transform hover:scale-105" gradientDuoTone="purpleToBlue" href={`https://duckduckgo.com/?q=${superheroData.name}`} target="_blank">Search on DuckDuckGo!</Button>
+          <Button className="transition-transform transform hover:scale-105" gradientDuoTone="purpleToBlue" href={`https://duckduckgo.com/?q=${superheroData.name}%20${superheroData.Publisher}`} target="_blank">Search on DuckDuckGo!</Button>
         </Card>
       )}
     </div>
