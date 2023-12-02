@@ -8,6 +8,7 @@ import Cookies from 'js-cookie';
 import { get } from 'http';
 import { useRouter } from 'next/navigation'
 const Navbar = () => {
+ 
   const router = useRouter()
   const [loggedIn, setLoggedIn] = useState('')
   const [username, setUsername] = useState('')
@@ -25,7 +26,7 @@ const Navbar = () => {
       setUsername(userQuery)
     }
     
-  }, [])
+  }, [router])
 
   
   return (

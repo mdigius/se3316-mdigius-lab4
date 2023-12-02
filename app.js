@@ -282,7 +282,8 @@ app.route('/api/secure/:user/lists')
             email: email,
             password: hashedPassword,
             disabled: false,
-            verified: true
+            verified: true,
+            admin: false
         }
         client.db("Superheroes").collection("Users").insertOne(user)
         res.status(201).json({ message: 'Succesfully added user'})

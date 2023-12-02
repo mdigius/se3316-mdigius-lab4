@@ -188,7 +188,7 @@ const ListResult = ({listData}: ListResultProps) => {
                 <Accordion.Content>
                 <div className='results' id='results'>
                     {reviewResults.map((result, index) => (
-                        <div key={index} className="transition-transform transform hover:scale-105 max-w-lg">
+                        <div key={index} className=" mb-3 max-w-lg">
                             
                             <Review reviewData={result}/>
                         </div>

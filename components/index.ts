@@ -13,8 +13,7 @@ import ListResult from './ListResult'
 import PersonalLists from './PersonalLists'
 import PersonalListResult from './PersonalListResult'
 import Review from './Review'
-
-
+import AdminDashboard from './AdminDashboard'
 
 export {
     Hero,
@@ -31,5 +30,6 @@ export {
     ListResult,
     PersonalLists,
     PersonalListResult,
-    Review
+    Review,
+    AdminDashboard
 }

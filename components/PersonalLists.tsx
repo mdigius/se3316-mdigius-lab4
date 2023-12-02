@@ -17,11 +17,6 @@ const PersonalLists = () => {
             fetchPersonalLists(userQuery)
             
           }
-        
-        
-        
-        
-    
       }, [])
   const [listResults, setListResults] = useState([]);
   const [username, setUsername] = useState('')
