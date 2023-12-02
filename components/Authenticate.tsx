@@ -62,6 +62,9 @@ const Authenticate = () => {
             .then(responseData => {
                 console.log('POST successful:', responseData);
                 // If succesful authentication, reroute to account page
+                if(responseData == true){
+                    Cookies.set('admin', 'true')
+                }
                 Cookies.set("loggedin", "true");
                 Cookies.set("username", username);
                 router.push('lists/public')

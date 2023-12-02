@@ -17,6 +17,7 @@ const UserDashboard = () => {
   
   async function handleLogout(){
     Cookies.set('username', '')
+    Cookies.set('admin', 'false')
     Cookies.set('loggedin', 'false')
   }
   async function changePassword(event: React.FormEvent){

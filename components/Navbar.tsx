@@ -12,9 +12,11 @@ const Navbar = () => {
   const router = useRouter()
   const [loggedIn, setLoggedIn] = useState('')
   const [username, setUsername] = useState('')
+  const [admin, setAdmin] = useState('')
   useEffect(() => {
     const loggedQuery = Cookies.get("loggedin")
     const userQuery = Cookies.get("username")
+    const adminQuery = Cookies.get("admin")
     if(loggedQuery==undefined || loggedQuery == 'false'){
       setLoggedIn('false')
     } else {
@@ -24,6 +26,11 @@ const Navbar = () => {
       setUsername('')
     } else {
       setUsername(userQuery)
+    }
+    if(adminQuery==undefined|| adminQuery == 'false'){
+      setAdmin('false')
+    } else {
+      setAdmin('true')
     }
     
   }, [router])
@@ -78,6 +85,14 @@ const Navbar = () => {
           <CustomButton
             title="Sign In"
             href="/authenticate"
+            btnType="button"
+            containerStyles="text-white rounded-xl bg-black-100 min-w-w[130px] transition-transform transform hover:scale-105"
+          />
+          }
+          {(loggedIn == 'true' && admin == 'true') && 
+          <CustomButton
+            title= {`Admin ${username}`}
+            href="/admin"
             btnType="button"
             containerStyles="text-white rounded-xl bg-black-100 min-w-w[130px] transition-transform transform hover:scale-105"
           />

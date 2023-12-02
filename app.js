@@ -250,7 +250,11 @@ app.route('/api/secure/:user/lists')
         const isPasswordMatch = await bcrypt.compare(password, usernameResult.password);
 
         if (isPasswordMatch) {
+            if(usernameResult.admin){
+                res.json(true)
+            } else {
             res.status(201).json({ message: 'Successfully authenticated user' });
+            }
         } else {
             return res.status(402).json({message: 'Invalid password' });
         }
