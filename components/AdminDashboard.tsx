@@ -196,7 +196,7 @@ const AdminDashboard = () => {
                 </Accordion.Panel>
                 <Accordion.Panel>
                     <Accordion.Title>
-                        DMCA Tools
+                        DMCA Workflow Guide
                     </Accordion.Title>
                     <Accordion.Content>
                     <p>
