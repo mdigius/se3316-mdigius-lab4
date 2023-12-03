@@ -1,13 +1,15 @@
 "use client";
 
 import { ListResultProps } from '@/types'
-import { Accordion, Alert, Button, Card, Label, TextInput, ToggleSwitch } from 'flowbite-react'
+import { Accordion, Alert, Button, Card, Label, TextInput, ToggleSwitch, Modal } from 'flowbite-react'
 import React, { useEffect, useState } from 'react'
 import SuperheroResult from "./SuperheroResult";
 import { SuperheroResultProps } from "@/types";
 import { HiInformationCircle } from 'react-icons/hi';
 import Cookies from 'js-cookie';
 import {useRouter} from 'next/navigation';
+
+
 const PersonalListResult = ({listData}: ListResultProps) => {
     const router = useRouter();
     const username = Cookies.get("username")
@@ -18,6 +20,7 @@ const PersonalListResult = ({listData}: ListResultProps) => {
     const [switch1, setSwitch1] = useState(listData.publicList);
     const [showAlert, setShowAlert] = useState(false); 
     const [alertMessage, setAlertMessage] = useState(''); 
+    const [alertColour, setAlertColour] = useState('failure');
     async function handleSubmit(event: React.FormEvent) {
                 event.preventDefault();
                 // URL to connect to api
@@ -46,12 +49,14 @@ const PersonalListResult = ({listData}: ListResultProps) => {
                 })
                 .then(responseData => {
                     console.log('POST successful:', responseData);
-                    router.push('')
-                    
+                    setAlertMessage('List successfuly updated!')
+                    setAlertColour('success')
+                    setShowAlert(true)
                 })
                 .catch(error => {
                     console.error('Error:', error);
-                    setAlertMessage(`Error creating list`);
+                    setAlertMessage(`Error updating list`);
+                    setAlertColour('failure')
                     setShowAlert(true);
                 });
 
@@ -82,6 +87,7 @@ const PersonalListResult = ({listData}: ListResultProps) => {
             });
 
     }
+    
     async function deleteList(){
         var url = `http://localhost:5002/api/secure/${username}/lists`
         const data = {
@@ -173,7 +179,7 @@ const PersonalListResult = ({listData}: ListResultProps) => {
                   <Button className="mt-5 transition-transform transform hover:scale-105" gradientMonochrome="success" type="submit">Update List</Button>
                   <Button className="mt-5 transition-transform transform hover:scale-105" gradientMonochrome="failure" onClick={deleteList}>Delete List</Button>
                     {/* Conditionally render the Alert component */}
-                    {showAlert && <Alert color="failure" icon={HiInformationCircle}>{alertMessage}</Alert>}
+                    {showAlert && <Alert color={alertColour} icon={HiInformationCircle}>{alertMessage}</Alert>}
             </form>
                     </Accordion.Content>
                 </Accordion.Panel>

@@ -317,7 +317,7 @@ app.route('/api/secure/:user/lists')
         }
         const listResult = await client.db("Superheroes").collection("Lists").findOne({ listName: listName });
         
-        if(listResult){
+        if(listResult && !isUpdate){
             return res.status(402).json({ error: 'List name already taken!' });
         }
         const currentDate = new Date(); // Get the current date

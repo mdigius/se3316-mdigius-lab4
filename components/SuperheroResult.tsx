@@ -7,6 +7,32 @@ import React, {useEffect, useState } from 'react';
 
 
 const SuperheroResult = ({superheroData}: SuperheroResultProps) => {
+  const [powers, setPowers] = useState([])
+  async function fetchPowers(){
+    const url = `http://localhost:5002/api/power/hero/${superheroData.name}`
+    fetch(url, {
+      method: 'GET',
+      headers: {
+          'Content-Type': 'application/json',
+      },
+  })
+      .then(response => {
+          if (!response.ok) {
+              throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          return response.json();
+      })
+      .then(responseData => {
+          console.log('GET successful:', responseData);
+          setPowers(responseData)
+      })
+      .catch(error => {
+          console.error('Error:', error);
+      });
+  }
+  useEffect(() => {
+    fetchPowers()
+  })
   return (
     <div className="mt-5 mb-5">
       {superheroData && (
@@ -31,12 +57,22 @@ const SuperheroResult = ({superheroData}: SuperheroResultProps) => {
                   <p>Weight: {superheroData.Weight}</p>
                 </Accordion.Content>
               </Accordion.Panel>
+              <Accordion.Panel>
+                <Accordion.Title>Powers</Accordion.Title>
+                <Accordion.Content>
+                <div className='results' id='results'>
+                    {powers.map((result, index) => (
+                        <p>{result}</p>
+                    ))}        
+                    </div>
+                  
+                </Accordion.Content>
+              </Accordion.Panel>
             </Accordion>
             
             
             
           </div>
-          <Button gradientDuoTone="purpleToBlue">View Powers!</Button>
           <Button className="transition-transform transform hover:scale-105" gradientDuoTone="purpleToBlue" href={`https://duckduckgo.com/?q=${superheroData.name}%20${superheroData.Publisher}`} target="_blank">Search on DuckDuckGo!</Button>
         </Card>
       )}

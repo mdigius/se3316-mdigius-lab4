@@ -27,15 +27,7 @@ const Superheroes = () => {
     async function handleSearch(event: React.FormEvent){
         event.preventDefault()
         var url = "http://localhost:5002/api/superheroInfo/query"
-        // if(searchCriteria == 'name'){
-        //     url += 'superheroInfo/name/' + searchQuery
-        // } else if(searchCriteria == 'race'){
-        //     url += 'race/' + searchQuery
-        // } else if(searchCriteria == 'publisher'){
-        //     url += 'publisher/' + searchQuery
-        // } else if(searchCriteria == 'power'){
-        //     url += 'power/' + searchQuery
-        // }
+        
         const data = {
             returnN: returnN,
             name: name,
@@ -69,7 +61,7 @@ const Superheroes = () => {
             })
             .catch(error => {
                 setSuperheroResults([])
-                setAlertMessage(`No heroes found for ${searchCriteria}: ${searchQuery}`);
+                setAlertMessage(`No heroes found for: ${name}`);
                 setShowAlert(true);
                 console.error('Error:', error);
             });

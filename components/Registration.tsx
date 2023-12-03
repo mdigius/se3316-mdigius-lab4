@@ -101,7 +101,7 @@ const Registration = () => {
                             onChange={(e) => setPassword(e.target.value)}
                         />
                     </div>
-                    <Button className="transition-transform transform hover:scale-105" outline gradientDuoTone="purpleToBlue" type="submit">Register new account</Button>
+                    <Button className="transition-transform transform hover:scale-105" gradientDuoTone="purpleToBlue" type="submit">Register new account</Button>
                     {/* Conditionally render the Alert component */}
                     {showAlert && <Alert color="failure" icon={HiInformationCircle}>{alertMessage}</Alert>}
                 </form>
