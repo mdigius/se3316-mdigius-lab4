@@ -43,6 +43,7 @@ app.route('/api/admin/privacy')
         const privacyData = req.body.privacyData
         const dmcaData = req.body.dmcaData
         const auData = req.body.auData
+
         await client.db("Superheroes").collection("Privacy").updateOne(
             { policyID: "privacy" },
             { $set: { policyData: privacyData} }
@@ -189,6 +190,20 @@ app.route('/api/secure/reviews/:listName')
         const selectedStars = req.body.selectedStars
         const comment = req.body.comment
         const listResult = await client.db("Superheroes").collection("Lists").findOne({listName: listName})
+
+        const sanitizedListName = sanitizeHtml(listName, {
+            allowedTags: [], // No HTML tags allowed
+            allowedAttributes: {}, // No attributes allowed
+        });
+        const sanitizedComment = sanitizeHtml(comment, {
+            allowedTags: [], // No HTML tags allowed
+            allowedAttributes: {}, // No attributes allowed
+        });
+
+        if(listName!=sanitizedListName || comment!=sanitizedComment){
+            return res.status(402).json({ error: 'Comment or list name unsanitized.'});
+        }
+        
         if (!listResult) {
             return res.status(404).json({ error: 'List does not exist' });
         }
@@ -310,7 +325,19 @@ app.route('/api/secure/:user/lists')
         const listName = req.body.listName;
         const publicList = req.body.publicList;
         const isUpdate = req.body.isUpdate;
-    
+        const sanitizedListName = sanitizeHtml(listName, {
+            allowedTags: [], // No HTML tags allowed
+            allowedAttributes: {}, // No attributes allowed
+        });
+        const sanitizedDescription = sanitizeHtml(description, {
+            allowedTags: [], // No HTML tags allowed
+            allowedAttributes: {}, // No attributes allowed
+        });
+        
+
+        if(listName!=sanitizedListName || description!=sanitizedDescription){
+            return res.status(402).json({ error: 'Description or list name unsanitized.'});
+        }
         // Verifies that the request included all proper parameters
         if (!username || !heroIDs || !listName) {
             return res.status(400).json({ error: 'Improper parameters in req body' });
@@ -341,6 +368,15 @@ app.route('/api/secure/:user/lists')
     })
     .delete(async (req, res) => {
         const listName = req.body.listName
+        const sanitizedListName = sanitizeHtml(listName, {
+            allowedTags: [], // No HTML tags allowed
+            allowedAttributes: {}, // No attributes allowed
+        });
+       
+
+        if(listName!=sanitizedListName){
+            return res.status(402).json({ error: 'Description or list name unsanitized.'});
+        }
         const listResult = await client.db("Superheroes").collection("Lists").findOne({ listName: listName });
         if(!listName){
             return res.status(400).json({ error: 'Improper parameters in req body' });
@@ -390,6 +426,24 @@ app.route('/api/secure/:user/lists')
         const username = req.body.username
         const email = req.body.email
         const password = req.body.password
+
+        const sanitizedUsername = sanitizeHtml(username, {
+            allowedTags: [], // No HTML tags allowed
+            allowedAttributes: {}, // No attributes allowed
+        });
+        const sanitizedEmail = sanitizeHtml(email, {
+            allowedTags: [], // No HTML tags allowed
+            allowedAttributes: {}, // No attributes allowed
+        });
+        const sanitizedPassword = sanitizeHtml(password, {
+            allowedTags: [], // No HTML tags allowed
+            allowedAttributes: {}, // No attributes allowed
+        });
+        
+
+        if(username != sanitizedUsername || email != sanitizedEmail || password != sanitizedPassword){
+            return res.status(402).json({ error: 'Unsanitized content'});
+        }
         // Verifies that the request included all proper parameters
         if(!username || !email || !password){
             return res.status(400).json({ error: 'Improper parameters in req body' });

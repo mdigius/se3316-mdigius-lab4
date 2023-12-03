@@ -14,7 +14,7 @@ const AdminDisableUser = ({userDataForAdmin}: UserDataForAdminProps) => {
     
 
     async function handleSubmit(event: React.FormEvent) {
-        event.preventDefault
+        event.preventDefault()
         const url = 'http://localhost:5002/api/admin/users';
 
         const data = {
@@ -38,15 +38,14 @@ const AdminDisableUser = ({userDataForAdmin}: UserDataForAdminProps) => {
         })
         .then(responseData => {
             console.log('POST successful:', responseData);
-            if(switch1){
-                setAlertColour('failure');
-                setAlertMessage('User is now disabled!');
-                setShowAlert(true);
-            } else {
-                setAlertColour('success');
-                setAlertMessage('User is no longer disabled!');
-                setShowAlert(true);
+            
+            if(switch2){
+                userDataForAdmin.admin = true
             }
+            setAlertColour('success');
+            setAlertMessage(`Updated to: Admin: ${switch2}, Disabled: ${switch1}`);
+            setShowAlert(true);
+            
         })
         .catch(error => {
             console.error('Error:', error);

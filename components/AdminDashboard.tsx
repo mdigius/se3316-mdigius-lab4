@@ -3,6 +3,7 @@ import { Accordion, Alert, Button, Card, Label, TextInput, ToggleSwitch } from '
 import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { AdminDisableUser, AdminReviewControl } from '.'
+import { HiInformationCircle } from 'react-icons/hi';
 
 const AdminDashboard = () => {
     const [reviewResults, setReviewResults] = useState([])
@@ -12,6 +13,12 @@ const AdminDashboard = () => {
     const [au, setAu] = useState('')
     const [disputeTitle, setDisputeTitle] = useState('')
     const [disputeMessage, setDisputeMessage] = useState('')
+    const [showAlert, setShowAlert] = useState(false);
+    const [alertMessage, setAlertMessage] = useState('');
+    const [alertColour, setAlertColour] = useState('failure');
+    const [showAlert2, setShowAlert2] = useState(false);
+    const [alertMessage2, setAlertMessage2] = useState('');
+    const [alertColour2, setAlertColour2] = useState('failure');
     async function handleSubmitDispute(event: React.FormEvent){
         event.preventDefault()
         var url = `http://localhost:5002/api/admin/disputes/`
@@ -35,6 +42,9 @@ const AdminDashboard = () => {
             })
             .then(responseData => {
                 console.log(responseData);
+                setAlertColour('success');
+                setAlertMessage('Dispute Submitted!');
+                setShowAlert(true);
             })
             .catch(error => {
                 console.error('Error:', error);
@@ -65,6 +75,10 @@ const AdminDashboard = () => {
             })
             .then(responseData => {
                 console.log(responseData);
+                setAlertColour2('success');
+                setAlertMessage2('Policies Updated!');
+                setShowAlert2(true);
+                
             })
             .catch(error => {
                 console.error('Error:', error);
@@ -256,6 +270,7 @@ const AdminDashboard = () => {
                       />
                     </div>
                   <Button className="mt-5 transition-transform transform hover:scale-105" gradientDuoTone="redToYellow" type="submit">Submit</Button>
+                  {showAlert2 && <Alert color={alertColour2} icon={HiInformationCircle}>{alertMessage2}</Alert>}
                    
             </form>
                     </Accordion.Content>
@@ -287,6 +302,7 @@ const AdminDashboard = () => {
                   </div>
                   
                   <Button className="mt-5 transition-transform transform hover:scale-105" gradientDuoTone="redToYellow" type="submit">Submit Dispute</Button>
+                  {showAlert && <Alert color={alertColour} icon={HiInformationCircle}>{alertMessage}</Alert>}
                    
             </form>
                     </Accordion.Content>
