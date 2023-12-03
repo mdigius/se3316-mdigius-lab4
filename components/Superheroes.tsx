@@ -158,7 +158,7 @@ const Superheroes = () => {
                     <Select id="publisher" defaultValue = 'Any' onChange={(e) => setPublisher(e.target.value.toLowerCase())}>
                         <option>Any</option>
                         {publisherList.map((result, index) => (
-                                <option>{result}</option>                 
+                                <option key={index}>{result}</option>                 
                             ))}  
                         
                     </Select>
@@ -168,7 +168,7 @@ const Superheroes = () => {
                     <Select id="race" defaultValue = 'Any' onChange={(e) => setRace(e.target.value.toLowerCase())}>
                         <option>Any</option>
                         {raceList.map((result, index) => (
-                                <option>{result}</option>                 
+                                <option key={index}>{result}</option>                 
                             ))}  
                         
                     </Select>

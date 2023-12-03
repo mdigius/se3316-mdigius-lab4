@@ -32,7 +32,7 @@ const SuperheroResult = ({superheroData}: SuperheroResultProps) => {
   }
   useEffect(() => {
     fetchPowers()
-  })
+  }, [])
   return (
     <div className="mt-5 mb-5">
       {superheroData && (
@@ -62,7 +62,7 @@ const SuperheroResult = ({superheroData}: SuperheroResultProps) => {
                 <Accordion.Content>
                 <div className='results' id='results'>
                     {powers.map((result, index) => (
-                        <p>{result}</p>
+                        <p key={index}>{result}</p>
                     ))}        
                     </div>
                   
