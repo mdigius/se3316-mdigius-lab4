@@ -2,9 +2,39 @@
 import { Accordion, Alert, Card } from 'flowbite-react'
 import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
-import { AdminDisableUser } from '.'
+import { AdminDisableUser, AdminReviewControl } from '.'
+
 const AdminDashboard = () => {
+    const [reviewResults, setReviewResults] = useState([])
     const [userResults, setUserResults] = useState([]);
+    
+
+    async function fetchReviews(){
+        
+        var url = `http://localhost:5002/api/admin/reviews/`
+        fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(responseData => {
+                console.log(responseData);
+                // If succesful authentication, reroute to account page
+                setReviewResults(responseData)
+            })
+            .catch(error => {
+                setReviewResults([])
+                console.error('Error:', error);
+            });
+
+    }
     async function fetchUserList(){
         const url = 'http://localhost:5002/api/admin/users'
         fetch(url, {
@@ -32,6 +62,7 @@ const AdminDashboard = () => {
 
     useEffect(()=> {
         fetchUserList()
+        fetchReviews()
 
     }, [])
   return (
@@ -55,6 +86,21 @@ const AdminDashboard = () => {
                             <AdminDisableUser userDataForAdmin={result}/>
                         </div>
                     ))}        
+                    </div>
+                    </Accordion.Content>
+                </Accordion.Panel>
+                <Accordion.Panel>
+                    <Accordion.Title>
+                        Reviews
+                    </Accordion.Title>
+                    <Accordion.Content>
+                    <div className='results' id='results'>
+                    {reviewResults.map((result, index) => (
+                        <div key={index} className="mb-5 max-w-lg">  
+                            <AdminReviewControl reviewData={result}/>
+                        </div>
+                    ))} 
+                          
                     </div>
                     </Accordion.Content>
                 </Accordion.Panel>

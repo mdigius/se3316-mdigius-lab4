@@ -29,7 +29,41 @@ app.use(cors());
 const superheroInfo = JSON.parse(fs.readFileSync('superhero_info.json'));
 const superheroPowers = JSON.parse(fs.readFileSync('superhero_powers.json'));
 app.use(express.json());
+app.route('/api/admin/reviews')
+.get(async (req, res) => {
+    const reviewResults = await client.db("Superheroes").collection("Reviews").find().toArray()
 
+    if(!reviewResults){
+        return res.status(404).json({ error: 'No reviews!' });
+    }
+    const reviews = new Set()
+    reviewResults.forEach(review => {
+        
+        reviews.add(review)
+    })
+
+    res.json(Array.from(reviews))
+
+})
+
+.post(async (req, res) => {
+    const author = req.body.author
+    const listName = req.body.listName
+    const hidden = req.body.hidden
+    const userResult = await client.db("Superheroes").collection("Reviews").findOne({author: author, listName: listName})
+    if (!userResult) {
+        return res.status(404).json({ error: 'Review does not exist' });
+    }
+
+    await client.db("Superheroes").collection("Reviews").updateOne(
+        { author: author, listName: listName },
+        { $set: { hidden: hidden} }
+    );
+
+    res.status(201).json({message: 'Successfully set review to hidden'})
+
+
+})
 app.route('/api/admin/users')
     .get(async (req, res) => {
         const userResults = await client.db("Superheroes").collection("Users").find().toArray()
@@ -41,7 +75,8 @@ app.route('/api/admin/users')
         userResults.forEach(user => {
             const result = {
                 username: user.username,
-                disabled: user.disabled
+                disabled: user.disabled,
+                admin: user.admin
             }
             users.add(result)
         })
@@ -53,6 +88,7 @@ app.route('/api/admin/users')
     .post(async (req, res) => {
         const username = req.body.username
         const disabled = req.body.disabled
+        const admin = req.body.admin
         const userResult = await client.db("Superheroes").collection("Users").findOne({username: username})
         if (!userResult) {
             return res.status(404).json({ error: 'User does not exist' });
@@ -60,7 +96,7 @@ app.route('/api/admin/users')
 
         await client.db("Superheroes").collection("Users").updateOne(
             { username: username },
-            { $set: { disabled: disabled } }
+            { $set: { disabled: disabled, admin: admin} }
         );
 
         res.status(201).json({message: 'Successfully modified users disabled status'})
@@ -95,7 +131,7 @@ app.route('/api/reviews/:listName')
 app.route('/api/secure/reviews/:listName')
     .get(async (req, res) => {
         const listName = req.params.listName
-        const reviewResults = await client.db("Superheroes").collection("Reviews").find({listName: listName}).toArray()
+        const reviewResults = await client.db("Superheroes").collection("Reviews").find({listName: listName, hidden: false}).toArray()
         if(!reviewResults){
             return res.status(404).json({ error: 'List has no reviews' });
         } else {

@@ -24,7 +24,8 @@ export interface SuperheroData {
   
   export interface UserDataForAdmin{
     username: string,
-    disabled: boolean
+    disabled: boolean,
+    admin: boolean
   }
 
   export interface ListData {

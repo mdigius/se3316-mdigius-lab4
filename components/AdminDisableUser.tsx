@@ -1,25 +1,26 @@
 "use client";
 import { UserDataForAdminProps } from '@/types';
-import { Alert, Card, ToggleSwitch } from 'flowbite-react'
+import { Alert, Button, Card, ToggleSwitch } from 'flowbite-react'
 import React, { useState, useEffect } from 'react'
 import { HiInformationCircle } from 'react-icons/hi';
 
 const AdminDisableUser = ({userDataForAdmin}: UserDataForAdminProps) => {
     const [switch1, setSwitch1] = useState(userDataForAdmin.disabled);
+    const [switch2, setSwitch2] = useState(userDataForAdmin.admin);
     const [showAlert, setShowAlert] = useState(false);
     const [alertMessage, setAlertMessage] = useState('');
     const [alertColour, setAlertColour] = useState('failure');
 
-    useEffect(() => {
-        modifyDisabled(switch1);
-    }, [switch1]);
+    
 
-    async function modifyDisabled(switchValue: boolean) {
+    async function handleSubmit(event: React.FormEvent) {
+        event.preventDefault
         const url = 'http://localhost:5002/api/admin/users';
 
         const data = {
             username: userDataForAdmin.username,
-            disabled: switchValue
+            disabled: switch1,
+            admin: switch2
         };
 
         fetch(url, {
@@ -37,7 +38,7 @@ const AdminDisableUser = ({userDataForAdmin}: UserDataForAdminProps) => {
         })
         .then(responseData => {
             console.log('POST successful:', responseData);
-            if(switchValue){
+            if(switch1){
                 setAlertColour('failure');
                 setAlertMessage('User is now disabled!');
                 setShowAlert(true);
@@ -58,15 +59,26 @@ const AdminDisableUser = ({userDataForAdmin}: UserDataForAdminProps) => {
                 {userDataForAdmin.username}
             </h5>
             <div className="flex max-w-md flex-col gap-4">
-                <ToggleSwitch
+            <form className="flex max-w-md flex-col gap-4 mt-10" onSubmit={handleSubmit}>
+            <ToggleSwitch
                     checked={switch1}
                     label="Disabled?"
-                    onChange={(newSwitchValue) => {
-                        setSwitch1(newSwitchValue);
-                    }}
+                    onChange={setSwitch1}
                 />
-            </div>
+            <ToggleSwitch
+                    checked={switch2}
+                    disabled={userDataForAdmin.admin}
+                    label="Admin user?"
+                    onChange={setSwitch2}
+                />
+            <Button className="mt-5 transition-transform transform hover:scale-105" gradientDuoTone="redToYellow" type="submit">Submit</Button>
+                
+
+            </form>
             {showAlert && <Alert color={alertColour} icon={HiInformationCircle}>{alertMessage}</Alert>}
+                
+            </div>
+            
         </Card>
     );
 }
