@@ -45,7 +45,7 @@ const CreateHeroList = () => {
       })
       .catch(error => {
           console.error('Error:', error);
-          setAlertMessage(`Error creating list`);
+          setAlertMessage(`List name already taken!`);
           setShowAlert(true);
       });
 

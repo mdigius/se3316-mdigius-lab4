@@ -159,7 +159,8 @@ app.route('/api/secure/reviews/:listName')
             author: author,
             selectedStars: selectedStars,
             comment: comment,
-            hidden: false
+            hidden: false,
+            date: currentDate, // Add the current date to the review
         }
 
         client.db("Superheroes").collection("Reviews").insertOne(review)
@@ -269,7 +270,11 @@ app.route('/api/secure/:user/lists')
         if (!username || !heroIDs || !listName) {
             return res.status(400).json({ error: 'Improper parameters in req body' });
         }
-    
+        const listResult = await client.db("Superheroes").collection("Lists").findOne({ listName: listName });
+        
+        if(listResult){
+            return res.status(402).json({ error: 'List name already taken!' });
+        }
         const currentDate = new Date(); // Get the current date
     
         const list = {
