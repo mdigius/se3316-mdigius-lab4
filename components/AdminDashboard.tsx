@@ -12,7 +12,8 @@ const AdminDashboard = () => {
     const [au, setAu] = useState('')
     const [disputeTitle, setDisputeTitle] = useState('')
     const [disputeMessage, setDisputeMessage] = useState('')
-    async function handleSubmitDispute(){
+    async function handleSubmitDispute(event: React.FormEvent){
+        event.preventDefault()
         var url = `http://localhost:5002/api/admin/disputes/`
 
         const data = {
@@ -40,7 +41,8 @@ const AdminDashboard = () => {
             });
 
     }
-    async function handleSubmit(){
+    async function handleSubmit(event: React.FormEvent){
+        event.preventDefault()
         var url = `http://localhost:5002/api/admin/privacy/`
 
         const data = {
