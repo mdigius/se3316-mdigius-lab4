@@ -374,6 +374,36 @@ app.route('/api/secure/:user/lists')
         res.status(201).json({ message: 'Succesfully added user'})
     })
 
+    app.route('/api/superheroInfo/query')
+    .get((req, res) => {
+        const returnN = req.query.returnN;
+        const name = req.query.name;
+        const publisher = req.query.publisher;
+        const race = req.query.race;
+        const power = req.query.power;
+        let superheroes = superheroInfo
+        if(name != ''){
+            superheroes = superheroInfo.filter((hero) => hero.name.toLowerCase().includes(name));
+        }
+
+        if (publisher !== 'any') {
+            superheroes = superheroes.filter((hero) => hero.Publisher.toLowerCase().includes(publisher));
+        }
+
+        if (race !== 'any') {
+            superheroes = superheroes.filter((hero) => hero.Race.toLowerCase().includes(race));
+        }
+
+        if (superheroes.length > 0) {
+            if (returnN) {
+                res.json(superheroes.slice(0, returnN));
+            } else {
+                res.json(superheroes);
+            }
+        } else {
+            res.status(404).json({ message: `No existing superheroes for query` });
+        }
+    });
 
 // Returns JSON objects of all superheroes
 app.route('/api/superheroInfo')
@@ -464,7 +494,7 @@ app.get('/api/power/:power', (req, res) => {
 app.get('/api/publisher', (req, res) => {
     const publishers = new Set();
     superheroInfo.forEach((hero) => {
-        publishers.add(hero.Publisher.toLowerCase());
+        publishers.add(hero.Publisher);
     });
     res.json(Array.from(publishers));
 });
@@ -493,7 +523,7 @@ app.get('/api/publisher/:id', (req, res) => {
 app.get('/api/race', (req, res) => {
     const races = new Set();
     superheroInfo.forEach((hero) => {
-        races.add(hero.Race.toLowerCase());
+        races.add(hero.Race);
     });
     res.json(Array.from(races));
 });

@@ -13,6 +13,11 @@ import { SuperheroResultProps } from "@/types";
 const Superheroes = () => {
     const router = useRouter()
     const [searchCriteria, setSearchCriteria] = useState('name');
+    const [publisher, setPublisher] = useState('any')
+    const [race, setRace] = useState('any')
+    const [publisherList, setPublisherList] = useState([])
+    const [name, setName] = useState('')
+    const [raceList, setRaceList] = useState([])
     const [searchQuery, setSearchQuery] = useState('');
     const [returnN, setReturnN] = useState('8');
     const [superheroResults, setSuperheroResults] = useState([]);
@@ -21,18 +26,21 @@ const Superheroes = () => {
 
     async function handleSearch(event: React.FormEvent){
         event.preventDefault()
-        var url = "http://localhost:5002/api/"
-        if(searchCriteria == 'name'){
-            url += 'superheroInfo/name/' + searchQuery
-        } else if(searchCriteria == 'race'){
-            url += 'race/' + searchQuery
-        } else if(searchCriteria == 'publisher'){
-            url += 'publisher/' + searchQuery
-        } else if(searchCriteria == 'power'){
-            url += 'power/' + searchQuery
-        }
+        var url = "http://localhost:5002/api/superheroInfo/query"
+        // if(searchCriteria == 'name'){
+        //     url += 'superheroInfo/name/' + searchQuery
+        // } else if(searchCriteria == 'race'){
+        //     url += 'race/' + searchQuery
+        // } else if(searchCriteria == 'publisher'){
+        //     url += 'publisher/' + searchQuery
+        // } else if(searchCriteria == 'power'){
+        //     url += 'power/' + searchQuery
+        // }
         const data = {
-            returnN: returnN
+            returnN: returnN,
+            name: name,
+            publisher: publisher,
+            race: race
         };
         // Converts the data to URL params
         const params = new URLSearchParams(data);
@@ -68,6 +76,62 @@ const Superheroes = () => {
 
 
     }
+    async function fetchRaces(){
+        var url = "http://localhost:5002/api/race"
+
+        fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(responseData => {
+                console.log('GET successful:', responseData);
+                // If succesful authentication, reroute to account page
+                setRaceList(responseData)
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+
+    }
+
+    async function fetchPublishers(){
+        var url = "http://localhost:5002/api/publisher"
+
+        fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(responseData => {
+                console.log('GET successful:', responseData);
+                // If succesful authentication, reroute to account page
+                setPublisherList(responseData)
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+
+    }
+    useEffect(() => {
+        fetchPublishers()
+        fetchRaces()
+
+    }, [])
     
   return (
     <div className="hero">
@@ -81,28 +145,42 @@ const Superheroes = () => {
             </p>
             <form className="flex max-w-md flex-col gap-4 mt-10" onSubmit={handleSearch}>
                 <div className="mb-2 block">
-                    <Label value="Search By" />
-                    <Select id="search-criteria" onChange={(e) => setSearchCriteria(e.target.value.toLowerCase())}>
-                        <option>Name</option>
-                        <option>Race</option>
-                        <option>Publisher</option>
-                        <option>Power</option>
-                    </Select>
+                    <Label value="Name:" />
+                    <TextInput
+                        id="searchQuery"
+                        placeholder="Example: Batman"
+                        shadow
+                        onChange={(e) => {
+                            setName(e.target.value);
+                            // if(e.target.value!=''){
+                            //     handleSearch(e); 
+                            // }
+                        }}
+                    />
                 </div>
                 
                 
-                <TextInput
-                id="searchQuery"
-                placeholder="Example: Batman"
-                required
-                shadow
-                onChange={(e) => {
-                    setSearchQuery(e.target.value);
-                    // if(e.target.value!=''){
-                    //     handleSearch(e); 
-                    // }
-                  }}
-                />
+                
+                <div className="mb-2 block">
+                    <Label value="Publisher" />
+                    <Select id="publisher" defaultValue = 'Any' onChange={(e) => setPublisher(e.target.value.toLowerCase())}>
+                        <option>Any</option>
+                        {publisherList.map((result, index) => (
+                                <option>{result}</option>                 
+                            ))}  
+                        
+                    </Select>
+                </div>
+                <div className="mb-2 block">
+                    <Label value="Race" />
+                    <Select id="race" defaultValue = 'Any' onChange={(e) => setRace(e.target.value.toLowerCase())}>
+                        <option>Any</option>
+                        {raceList.map((result, index) => (
+                                <option>{result}</option>                 
+                            ))}  
+                        
+                    </Select>
+                </div>
                 <div className="mb-2 block">
                     <Label value="Results Length" />
                     <Select id="returnN" defaultValue = '8' onChange={(e) => setReturnN(e.target.value)}>
