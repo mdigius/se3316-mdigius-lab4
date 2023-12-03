@@ -29,6 +29,37 @@ app.use(cors());
 const superheroInfo = JSON.parse(fs.readFileSync('superhero_info.json'));
 const superheroPowers = JSON.parse(fs.readFileSync('superhero_powers.json'));
 app.use(express.json());
+
+app.route('/api/privacy')
+    .get(async (req, res) => {
+        const privacyResults = await client.db("Superheroes").collection("Privacy").find().toArray()
+        if(!privacyResults){
+            return res.status(404).json({ error: 'No policies!' });
+        }
+        res.json(privacyResults)
+    })
+app.route('/api/admin/privacy')
+    .post(async (req, res) => {
+        const privacyData = req.body.privacyData
+        const dmcaData = req.body.dmcaData
+        const auData = req.body.auData
+        await client.db("Superheroes").collection("Privacy").updateOne(
+            { policyID: "privacy" },
+            { $set: { policyData: privacyData} }
+        );
+        await client.db("Superheroes").collection("Privacy").updateOne(
+            { policyID: "dmca" },
+            { $set: { policyData: dmcaData} }
+        );
+        await client.db("Superheroes").collection("Privacy").updateOne(
+            { policyID: "au" },
+            { $set: { policyData: auData} }
+        );
+        res.status(201).json({message: 'Successfully updated policies'})
+
+    })
+    
+
 app.route('/api/admin/reviews')
 .get(async (req, res) => {
     const reviewResults = await client.db("Superheroes").collection("Reviews").find().toArray()

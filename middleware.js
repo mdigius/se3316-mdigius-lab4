@@ -10,7 +10,7 @@ export default function middleware(req){
     if(!verify && url.includes('/dashboard')){
         return NextResponse.redirect("http://localhost:3000/register");
     }
-    if(admin != "true" && url.includes('/admin')){
+    if(!admin && url.includes('/admin')){
         return NextResponse.redirect("http://localhost:3000/register");
     }
 

@@ -1,10 +1,47 @@
 "use client";
 import { Accordion, Card } from 'flowbite-react'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Image from 'next/image';
 import { AdminDisableUser, AdminReviewControl } from '.';
 
 const PrivacyPage = () => {
+    const [privacy, setPrivacy] = useState('')
+    const [dmca, setDMCA] = useState('')
+    const [au, setAu] = useState('')
+    
+    async function fetchPolicies(){
+        
+        var url = `http://localhost:5002/api/privacy/`
+        fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(responseData => {
+                console.log(responseData);
+                
+                setPrivacy(responseData[0].policyData)
+                setDMCA(responseData[1].policyData)
+                setAu(responseData[2].policyData)
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+
+    }
+
+
+  useEffect(() => {
+    fetchPolicies()
+
+  }, [])
   return (
     <div className="hero">
       <div className="flex-1 pt-36 padding-x">
@@ -20,22 +57,7 @@ const PrivacyPage = () => {
                     </Accordion.Title>
                     <Accordion.Content>
                       <p>
-                      HeroHub Security and Privacy Policy
-                      1. Information Collected:
-
-                      HeroHub collects user information for account creation and service personalization.
-                      Information includes but is not limited to: name, email, and browsing behavior.
-                      2. Data Security:
-
-                      HeroHub employs industry-standard encryption to safeguard user data.
-                      Strict access controls are in place, limiting data access to authorized personnel.
-                      3. Information Sharing:
-
-                      HeroHub does not sell or share user data with third parties without explicit consent.
-                      Limited data may be shared with service providers for operational purposes.
-                      4. Policy Updates:
-
-                      HeroHub reserves the right to update this policy; users will be notified of any changes.
+                      {privacy}
                       </p>
                     
                     </Accordion.Content>
@@ -46,21 +68,7 @@ const PrivacyPage = () => {
                     </Accordion.Title>
                     <Accordion.Content>
                       <p>
-                      HeroHub DMCA Notice & Takedown Policy
-                      1. Reporting Infringements:
-
-                      To report copyright infringements, please send a DMCA notice to [designated email].
-                      2. Required Information:
-
-                      Include detailed information about the alleged infringement.
-                      Provide contact details for further communication.
-                      3. Takedown Process:
-
-                      Upon receipt of a valid DMCA notice, HeroHub will promptly investigate and take appropriate action.
-                      Users may dispute takedown requests; a detailed dispute process is outlined in our policy.
-                      4. Repeat Offenders:
-
-                      HeroHub reserves the right to terminate accounts of repeat infringers.
+                     {dmca}
                       </p>
                     
                     </Accordion.Content>
@@ -71,19 +79,7 @@ const PrivacyPage = () => {
                     </Accordion.Title>
                     <Accordion.Content>
                       <p>
-                      HeroHub Acceptable Use Policy (AUP)
-                      1. Prohibited Content:
-
-                      Users must not upload or share content that violates legal regulations or infringes on intellectual property rights.
-                      2. User Conduct:
-
-                      Respectful and ethical behavior is expected; harassment or abuse will not be tolerated.
-                      3. Account Termination:
-
-                      HeroHub may suspend or terminate accounts violating the AUP.
-                      4. Reporting Violations:
-
-                      Users are encouraged to report AUP violations for prompt investigation and action.
+                     {au}
                       </p>
                     
                     </Accordion.Content>
