@@ -52,7 +52,7 @@ const Navbar = () => {
         <div className="flex space-x-4">
           <CustomButton
             title="Privacy Policy"
-            href="/"
+            href="/privacy"
             btnType="button"
             containerStyles="text-white rounded-xl bg-black-100 min-w-w[130px] transition-transform transform hover:scale-105"
             
