@@ -58,43 +58,57 @@ app.route('/api/admin/privacy')
         res.status(201).json({message: 'Successfully updated policies'})
 
     })
+app.route('/api/admin/disputes')
+    .post(async (req, res) => {
+        const disputeTitle = req.body.disputeTitle
+        const disputeMessage = req.body.disputeMessage
+        const currentDate = new Date(); // Get the current date
+        const data = {
+            disputeTitle: disputeTitle,
+            disputeMessage: disputeMessage,
+            date: currentDate
+        }
+        await client.db("Superheroes").collection("Disputes").insertOne(data)
+        res.status(201).json({message: 'Successfully inserted dispute'})
+
+    })
     
 
-app.route('/api/admin/reviews')
-.get(async (req, res) => {
-    const reviewResults = await client.db("Superheroes").collection("Reviews").find().toArray()
+    app.route('/api/admin/reviews')
+        .get(async (req, res) => {
+            const reviewResults = await client.db("Superheroes").collection("Reviews").find().toArray()
 
-    if(!reviewResults){
-        return res.status(404).json({ error: 'No reviews!' });
-    }
-    const reviews = new Set()
-    reviewResults.forEach(review => {
-        
-        reviews.add(review)
-    })
+            if(!reviewResults){
+                return res.status(404).json({ error: 'No reviews!' });
+            }
+            const reviews = new Set()
+            reviewResults.forEach(review => {
+                
+                reviews.add(review)
+            })
 
-    res.json(Array.from(reviews))
+            res.json(Array.from(reviews))
 
-})
+        })
 
-.post(async (req, res) => {
-    const author = req.body.author
-    const listName = req.body.listName
-    const hidden = req.body.hidden
-    const userResult = await client.db("Superheroes").collection("Reviews").findOne({author: author, listName: listName})
-    if (!userResult) {
-        return res.status(404).json({ error: 'Review does not exist' });
-    }
+        .post(async (req, res) => {
+            const author = req.body.author
+            const listName = req.body.listName
+            const hidden = req.body.hidden
+            const userResult = await client.db("Superheroes").collection("Reviews").findOne({author: author, listName: listName})
+            if (!userResult) {
+                return res.status(404).json({ error: 'Review does not exist' });
+            }
 
-    await client.db("Superheroes").collection("Reviews").updateOne(
-        { author: author, listName: listName },
-        { $set: { hidden: hidden} }
-    );
+            await client.db("Superheroes").collection("Reviews").updateOne(
+                { author: author, listName: listName },
+                { $set: { hidden: hidden} }
+            );
 
-    res.status(201).json({message: 'Successfully set review to hidden'})
+            res.status(201).json({message: 'Successfully set review to hidden'})
 
 
-})
+        })
 app.route('/api/admin/users')
     .get(async (req, res) => {
         const userResults = await client.db("Superheroes").collection("Users").find().toArray()
@@ -184,7 +198,7 @@ app.route('/api/secure/reviews/:listName')
         if(reviewResult){
             return res.status(404).json({ error: 'User has already left a review' });
         }
-
+        const currentDate = new Date(); // Get the current date
         const review = {
             listName: listName,
             author: author,

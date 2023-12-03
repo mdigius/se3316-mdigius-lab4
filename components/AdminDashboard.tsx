@@ -10,6 +10,36 @@ const AdminDashboard = () => {
     const [privacy, setPrivacy] = useState('')
     const [dmca, setDMCA] = useState('')
     const [au, setAu] = useState('')
+    const [disputeTitle, setDisputeTitle] = useState('')
+    const [disputeMessage, setDisputeMessage] = useState('')
+    async function handleSubmitDispute(){
+        var url = `http://localhost:5002/api/admin/disputes/`
+
+        const data = {
+            disputeTitle: disputeTitle,
+            disputeMessage: disputeMessage
+        }
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(responseData => {
+                console.log(responseData);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+
+    }
     async function handleSubmit(){
         var url = `http://localhost:5002/api/admin/privacy/`
 
@@ -224,6 +254,37 @@ const AdminDashboard = () => {
                       />
                     </div>
                   <Button className="mt-5 transition-transform transform hover:scale-105" gradientDuoTone="redToYellow" type="submit">Submit</Button>
+                   
+            </form>
+                    </Accordion.Content>
+                </Accordion.Panel>
+
+                <Accordion.Panel>
+                    <Accordion.Title>
+                        Submit Dispute
+                    </Accordion.Title>
+                    <Accordion.Content>
+                    <form className="flex max-w-md flex-col gap-4 mt-10" onSubmit={handleSubmitDispute}>
+                  <div className="mb-2 block">
+                     <Label value="Dispute Title" />
+                     <TextInput
+                        required
+                        placeholder='Enter title'
+                        shadow
+                        onChange={(e) => setDisputeTitle(e.target.value)}
+                      />
+                  </div>
+                  <div className="mb-2 block">
+                     <Label value="Dispute Message" />
+                     <TextInput
+                        shadow
+                        placeholder='Enter more info'
+                        required
+                        onChange={(e) => setDisputeMessage(e.target.value)}
+                      />
+                  </div>
+                  
+                  <Button className="mt-5 transition-transform transform hover:scale-105" gradientDuoTone="redToYellow" type="submit">Submit Dispute</Button>
                    
             </form>
                     </Accordion.Content>
