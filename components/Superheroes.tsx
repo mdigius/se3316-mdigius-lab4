@@ -12,6 +12,7 @@ import { SuperheroResultProps } from "@/types";
 
 const Superheroes = () => {
     const router = useRouter()
+    const [power, setPower] = useState('any')
     const [searchCriteria, setSearchCriteria] = useState('name');
     const [publisher, setPublisher] = useState('any')
     const [race, setRace] = useState('any')
@@ -32,6 +33,7 @@ const Superheroes = () => {
             returnN: returnN,
             name: name,
             publisher: publisher,
+            power: power,
             race: race
         };
         // Converts the data to URL params
@@ -137,16 +139,24 @@ const Superheroes = () => {
             </p>
             <form className="flex max-w-md flex-col gap-4 mt-10" onSubmit={handleSearch}>
                 <div className="mb-2 block">
-                    <Label value="Name:" />
+                    <Label value="Name (Optional):" />
                     <TextInput
-                        id="searchQuery"
+                        id="name"
                         placeholder="Example: Batman"
                         shadow
                         onChange={(e) => {
                             setName(e.target.value);
-                            // if(e.target.value!=''){
-                            //     handleSearch(e); 
-                            // }
+                        }}
+                    />
+                </div>
+                <div className="mb-2 block">
+                    <Label value="Power: (Optional):" />
+                    <TextInput
+                        id="power"
+                        placeholder="Example: Telekinesis"
+                        shadow
+                        onChange={(e) => {
+                            setPower(e.target.value);
                         }}
                     />
                 </div>

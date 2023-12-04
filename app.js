@@ -473,18 +473,39 @@ app.route('/api/secure/:user/lists')
         client.db("Superheroes").collection("Users").insertOne(user)
         res.status(201).json({ message: 'Succesfully added user'})
     })
-
+    const getTruePowers = (name) => {
+        const powers = superheroPowers.find((power) => power.hero_names.toLowerCase() === name);
+        const truePowers = new Set();
+    
+        if (powers) {
+            for (const power in powers) {
+                if (powers[power] == 'True') {
+                    truePowers.add(power);
+                }
+            }
+        }
+    
+        return Array.from(truePowers);
+    };
     app.route('/api/superheroInfo/query')
     .get((req, res) => {
         const returnN = req.query.returnN;
         const name = req.query.name ? req.query.name.replace(/\s/g, '') : '';
         const publisher = req.query.publisher;
+        const power = req.query.power ? req.query.power.replace(/\s/g, '') : '';
         const race = req.query.race;
-        const power = req.query.power;
         let superheroes = superheroInfo
         if (name !== '') {
+            // Fuzzy matches hero name
             superheroes = superheroes.filter((hero) => fuzzy.match(name.toLowerCase(), hero.name.toLowerCase()));
-            
+        }
+
+        if (power !== '') {
+            superheroes = superheroes.filter((hero) => {
+                const heroPowers = getTruePowers(hero.name.toLowerCase());
+                // Fuzzy matches hero power name
+                return heroPowers.some((heroPower) => fuzzy.match(power.toLowerCase(), heroPower.toLowerCase()));
+            });
         }
 
         if (publisher !== 'any') {
