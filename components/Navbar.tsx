@@ -91,7 +91,7 @@ const Navbar = () => {
           }
           {(loggedIn == 'true' && admin == 'true') && 
           <CustomButton
-            title= {`Admin ${username}`}
+            title= {`Admin Dashboard`}
             href="/admin"
             btnType="button"
             containerStyles="text-white rounded-xl bg-black-100 min-w-w[130px] transition-transform transform hover:scale-105"

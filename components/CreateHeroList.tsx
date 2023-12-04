@@ -1,9 +1,10 @@
 "use client";
 import { Alert, Button, Label, TextInput, ToggleSwitch } from 'flowbite-react';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { HiInformationCircle } from 'react-icons/hi';
 import Cookies from 'js-cookie';
 import {useRouter} from 'next/navigation';
+import Image from 'next/image';
 const CreateHeroList = () => {
   const router = useRouter();
   const username = Cookies.get("username")
@@ -13,8 +14,30 @@ const CreateHeroList = () => {
   const [switch1, setSwitch1] = useState(false);
   const [showAlert, setShowAlert] = useState(false); 
   const [alertMessage, setAlertMessage] = useState(''); 
+  useEffect(()=>{
+    if(Cookies.get('loggedin') != 'true'){
+      router.push('/register')
+  }
+    }, [])
+    function validateHeroIDs(heroIDs: string): boolean {
+      const heroIDArray = heroIDs.split(',');
+  
+      for (const id of heroIDArray) {
+          const trimmedId = id.trim();
+          if (!/^\d+$/.test(trimmedId) || Number(trimmedId) < 0 || Number(trimmedId) > 733) {
+              return false;
+          }
+      }
+  
+      return true;
+  }
   async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
+    if (!validateHeroIDs(heroIDs)) {
+      setAlertMessage('Invalid Hero IDs! Please make sure they are integers, separated by commas, and within the range of 0-733.');
+      setShowAlert(true);
+      return;
+  }
     // URL to connect to api
     const url = `http://localhost:5002/api/secure/${username}/lists`;
     // Creates json body object to be passed in post request
@@ -26,6 +49,11 @@ const CreateHeroList = () => {
         publicList: switch1,
         isUpdate: false
     };
+    if (!validateHeroIDs(heroIDs)) {
+        setAlertMessage('Invalid heroIDs! Please make sure they are integers, separated by commas, and within the range of 0-73.');
+        setShowAlert(true);
+        return;
+    }
     fetch(url, {
       method: 'POST',
       headers: {
@@ -99,7 +127,16 @@ const CreateHeroList = () => {
                     {/* Conditionally render the Alert component */}
                     {showAlert && <Alert color="failure" icon={HiInformationCircle}>{alertMessage}</Alert>}
             </form>
+            
           </div>
+          <div className="hero__image-container">
+                <div className="hero__image -mr-10">
+                    <Image src="/scorpion.png" alt="hero"
+                        fill className="object-contain mt-10"
+                    />
+                </div>
+            </div>
+          
     </div>
   )
 }

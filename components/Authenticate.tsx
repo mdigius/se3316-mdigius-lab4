@@ -71,7 +71,7 @@ const Authenticate = () => {
                 Cookies.set("username", username); 
                 
                 
-                await router.push('lists/public')
+                router.push('lists/public')
                 setAlertColour('success')
                 setAlertMessage(`Success! Logging you in`);
                 setShowAlert(true);
