@@ -225,6 +225,7 @@ app.route('/api/secure/reviews/:listName')
         }
 
         client.db("Superheroes").collection("Reviews").insertOne(review)
+        res.status(201).json({message: 'Successfully inserted review'})
 
 
     })
