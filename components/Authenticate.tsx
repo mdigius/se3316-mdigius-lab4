@@ -77,7 +77,7 @@ const Authenticate = () => {
                 setShowAlert(true);
                 setTimeout(() => {
                     window.location.reload();
-                  }, 300);
+                  }, 550);
                 
                 
                 
