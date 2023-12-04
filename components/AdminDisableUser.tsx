@@ -3,7 +3,7 @@ import { UserDataForAdminProps } from '@/types';
 import { Alert, Button, Card, ToggleSwitch } from 'flowbite-react'
 import React, { useState, useEffect } from 'react'
 import { HiInformationCircle } from 'react-icons/hi';
-
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 const AdminDisableUser = ({userDataForAdmin}: UserDataForAdminProps) => {
     const [switch1, setSwitch1] = useState(userDataForAdmin.disabled);
     const [switch2, setSwitch2] = useState(userDataForAdmin.admin);
@@ -15,7 +15,7 @@ const AdminDisableUser = ({userDataForAdmin}: UserDataForAdminProps) => {
 
     async function handleSubmit(event: React.FormEvent) {
         event.preventDefault()
-        const url = 'http://localhost:5002/api/admin/users';
+        const url = `${apiUrl}/admin/users`;
 
         const data = {
             username: userDataForAdmin.username,

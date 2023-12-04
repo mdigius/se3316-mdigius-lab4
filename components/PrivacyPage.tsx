@@ -3,6 +3,7 @@ import { Accordion, Card } from 'flowbite-react'
 import React, { useEffect, useState } from 'react'
 import Image from 'next/image';
 import { AdminDisableUser, AdminReviewControl } from '.';
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 const PrivacyPage = () => {
     const [privacy, setPrivacy] = useState('')
@@ -11,7 +12,7 @@ const PrivacyPage = () => {
     
     async function fetchPolicies(){
         
-        var url = `http://localhost:5002/api/privacy/`
+        var url = `${apiUrl}/privacy/`
         fetch(url, {
             method: 'GET',
             headers: {

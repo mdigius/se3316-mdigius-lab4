@@ -6,6 +6,7 @@ import { AdminDisableUser, AdminReviewControl } from '.'
 import { HiInformationCircle } from 'react-icons/hi';
 import {useRouter} from 'next/navigation'
 import Cookies from 'js-cookie'
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 const AdminDashboard = () => {
     const router = useRouter()
     const [reviewResults, setReviewResults] = useState([])
@@ -23,7 +24,7 @@ const AdminDashboard = () => {
     const [alertColour2, setAlertColour2] = useState('failure');
     async function handleSubmitDispute(event: React.FormEvent){
         event.preventDefault()
-        var url = `http://localhost:5002/api/admin/disputes/`
+        var url = `${apiUrl}/admin/disputes/`
 
         const data = {
             disputeTitle: disputeTitle,
@@ -55,7 +56,7 @@ const AdminDashboard = () => {
     }
     async function handleSubmit(event: React.FormEvent){
         event.preventDefault()
-        var url = `http://localhost:5002/api/admin/privacy/`
+        var url = `${apiUrl}/admin/privacy/`
 
         const data = {
             privacyData: privacy,
@@ -89,7 +90,7 @@ const AdminDashboard = () => {
     }
     async function fetchPolicies(){
         
-        var url = `http://localhost:5002/api/privacy/`
+        var url = `${apiUrl}/privacy/`
         fetch(url, {
             method: 'GET',
             headers: {
@@ -116,7 +117,7 @@ const AdminDashboard = () => {
     }
     async function fetchReviews(){
         
-        var url = `http://localhost:5002/api/admin/reviews/`
+        var url = `${apiUrl}/admin/reviews/`
         fetch(url, {
             method: 'GET',
             headers: {
@@ -141,7 +142,7 @@ const AdminDashboard = () => {
 
     }
     async function fetchUserList(){
-        const url = 'http://localhost:5002/api/admin/users'
+        const url = `${apiUrl}/admin/users`
         fetch(url, {
             method: 'GET',
             headers: {

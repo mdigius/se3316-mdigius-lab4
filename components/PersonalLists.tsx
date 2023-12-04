@@ -5,6 +5,7 @@ import ListResult from './ListResult';
 import Cookies from 'js-cookie';
 import PersonalListResult from './PersonalListResult';
 import { useRouter } from 'next/navigation';
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 const PersonalLists = () => {
   const router = useRouter()
     useEffect(()=>{
@@ -27,7 +28,7 @@ const PersonalLists = () => {
   const [listResults, setListResults] = useState([]);
   const [username, setUsername] = useState('')
   async function fetchPersonalLists(user: string){
-    var url = `http://localhost:5002/api/secure/${user}/lists`
+    var url = `${apiUrl}/secure/${user}/lists`
     fetch(url, {
       method: 'GET',
       headers: {

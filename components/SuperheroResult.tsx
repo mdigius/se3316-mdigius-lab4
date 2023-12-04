@@ -3,13 +3,13 @@
 import { SuperheroResultProps } from "@/types";
 import { Card, Button, Label, Accordion } from "flowbite-react";
 import React, {useEffect, useState } from 'react';
-
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 
 const SuperheroResult = ({superheroData}: SuperheroResultProps) => {
   const [powers, setPowers] = useState([])
   async function fetchPowers(){
-    const url = `http://localhost:5002/api/power/hero/${superheroData.name}`
+    const url = `${apiUrl}/power/hero/${superheroData.name}`
     fetch(url, {
       method: 'GET',
       headers: {

@@ -5,6 +5,7 @@ import React, { useState } from 'react'
 import { HiInformationCircle } from 'react-icons/hi';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation'
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 const UserDashboard = () => {
   const router = useRouter()
@@ -22,7 +23,7 @@ const UserDashboard = () => {
   }
   async function changePassword(event: React.FormEvent){
     event.preventDefault()
-    const url = `http://localhost:5002/api/secure/${username}/modify`
+    const url = `${apiUrl}/secure/${username}/modify`
     const data = {
       currentPassword: currentPassword,
       newPassword: newPassword

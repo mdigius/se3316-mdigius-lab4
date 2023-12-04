@@ -8,6 +8,7 @@ import { SuperheroResultProps } from "@/types";
 import { HiInformationCircle } from 'react-icons/hi';
 import Cookies from 'js-cookie';
 import {useRouter} from 'next/navigation';
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 
 const PersonalListResult = ({listData}: ListResultProps) => {
@@ -24,7 +25,7 @@ const PersonalListResult = ({listData}: ListResultProps) => {
     async function handleSubmit(event: React.FormEvent) {
                 event.preventDefault();
                 // URL to connect to api
-                const url = `http://localhost:5002/api/secure/${username}/lists`;
+                const url = `${apiUrl}/secure/${username}/lists`;
                 // Creates json body object to be passed in post request
                 const data = {
                     username: username,
@@ -63,7 +64,7 @@ const PersonalListResult = ({listData}: ListResultProps) => {
 
         }
     async function fetchHeroes(){
-        var url = `http://localhost:5002/api/secure/lists/${listData.listName}/heroes`
+        var url = `${apiUrl}/secure/lists/${listData.listName}/heroes`
         fetch(url, {
             method: 'GET',
             headers: {
@@ -89,7 +90,7 @@ const PersonalListResult = ({listData}: ListResultProps) => {
     }
     
     async function deleteList(){
-        var url = `http://localhost:5002/api/secure/${username}/lists`
+        var url = `${apiUrl}/secure/${username}/lists`
         const data = {
             listName: listData.listName
         }

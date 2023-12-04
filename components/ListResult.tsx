@@ -8,6 +8,7 @@ import SuperheroResult from "./SuperheroResult";
 import { SuperheroResultProps } from "@/types";
 import Cookies from 'js-cookie';
 import Review from './Review';
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 const ListResult = ({listData}: ListResultProps) => {
     const username = Cookies.get('username')
     const [superheroResults, setSuperheroResults] = useState([]);
@@ -22,7 +23,7 @@ const ListResult = ({listData}: ListResultProps) => {
         setSelectedStars(index + 1);
     };
     async function fetchHeroes(){
-        var url = `http://localhost:5002/api/secure/lists/${listData.listName}/heroes`
+        var url = `${apiUrl}/secure/lists/${listData.listName}/heroes`
         fetch(url, {
             method: 'GET',
             headers: {
@@ -47,7 +48,7 @@ const ListResult = ({listData}: ListResultProps) => {
 
     }
     async function fetchReviews(){
-        var url = `http://localhost:5002/api/secure/reviews/${listData.listName}`
+        var url = `${apiUrl}/secure/reviews/${listData.listName}`
         fetch(url, {
             method: 'GET',
             headers: {
@@ -72,7 +73,7 @@ const ListResult = ({listData}: ListResultProps) => {
 
     }
     async function fetchTotalStars(){
-        var url = `http://localhost:5002/api/reviews/${listData.listName}`
+        var url = `${apiUrl}/reviews/${listData.listName}`
         fetch(url, {
             method: 'GET',
             headers: {
@@ -104,7 +105,7 @@ const ListResult = ({listData}: ListResultProps) => {
     }, []);
     async function handleSubmitReview(event: React.FormEvent){
         event.preventDefault()
-        const url = `http://localhost:5002/api/secure/reviews/${listData.listName}`
+        const url = `${apiUrl}/secure/reviews/${listData.listName}`
 
         const data = {
             author: username,

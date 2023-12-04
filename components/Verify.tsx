@@ -4,6 +4,7 @@ import Cookies from 'js-cookie';
 import { Alert, Button, Card, Label } from 'flowbite-react';
 import { useRouter } from 'next/navigation'
 import { HiInformationCircle } from 'react-icons/hi';
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 const Verify = () => {
     const router = useRouter()
@@ -25,7 +26,7 @@ const Verify = () => {
     async function handleSubmit(event: React.FormEvent) {
         event.preventDefault();
         // URL to connect to api
-        const url = 'http://localhost:5002/api/verify';
+        const url = `${apiUrl}/verify`;
         // Creates json body object to be passed in post request
         const data = {
             username: username

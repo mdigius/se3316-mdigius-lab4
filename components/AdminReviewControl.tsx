@@ -4,7 +4,7 @@ import { Alert, Button, Card, ToggleSwitch } from 'flowbite-react'
 import { HiInformationCircle } from 'react-icons/hi';
 import React, { useState } from 'react'
 import { Review } from '.'
-
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 const AdminReviewControl = ({reviewData}: ReviewProps) => {
   const [switch1, setSwitch1] = useState(reviewData.hidden);
   const [showAlert, setShowAlert] = useState(false);
@@ -13,7 +13,7 @@ const AdminReviewControl = ({reviewData}: ReviewProps) => {
 
   async function handleSubmit(event: React.FormEvent){
     event.preventDefault()
-    const url = 'http://localhost:5002/api/admin/reviews';
+    const url = `${apiUrl}/admin/reviews`;
 
         const data = {
             author: reviewData.author,

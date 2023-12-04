@@ -5,6 +5,7 @@ import { HiInformationCircle } from 'react-icons/hi';
 import Cookies from 'js-cookie';
 import {useRouter} from 'next/navigation';
 import Image from 'next/image';
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 const CreateHeroList = () => {
   const router = useRouter();
   const username = Cookies.get("username")
@@ -39,7 +40,7 @@ const CreateHeroList = () => {
       return;
   }
     // URL to connect to api
-    const url = `http://localhost:5002/api/secure/${username}/lists`;
+    const url = `${apiUrl}/secure/${username}/lists`;
     // Creates json body object to be passed in post request
     const data = {
         username: username,

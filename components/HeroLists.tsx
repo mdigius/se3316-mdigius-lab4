@@ -6,12 +6,12 @@ import ListResult from './ListResult';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
 import { Navbar } from '.';
-
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 const HeroLists = () => {
   const router = useRouter()
   const [listResults, setListResults] = useState([]);
   async function fetchPublicLists(){
-    var url = `http://localhost:5002/api/secure/publicLists`
+    var url = `${apiUrl}/secure/publicLists`
     fetch(url, {
       method: 'GET',
       headers: {

@@ -7,7 +7,7 @@ import { HiInformationCircle } from 'react-icons/hi';
 import CustomButton from './CustomButton';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation'
-
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 const Authenticate = () => {
     const router = useRouter()
     const [username, setUsername] = useState('');
@@ -19,7 +19,7 @@ const Authenticate = () => {
     async function handleSubmit(event: React.FormEvent) {
         event.preventDefault();
         // URL to connect to api
-        const url = 'http://localhost:5002/api/secure/';
+        const url = `${apiUrl}/secure/`;
         // Creates json body object to be passed in post request params
         const data = {
             username: username,

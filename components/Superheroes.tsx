@@ -8,6 +8,7 @@ import Link from 'next/link'
 import SuperheroResult from "./SuperheroResult";
 import { HiInformationCircle } from 'react-icons/hi';
 import { SuperheroResultProps } from "@/types";
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 
 const Superheroes = () => {
@@ -27,7 +28,7 @@ const Superheroes = () => {
 
     async function handleSearch(event: React.FormEvent){
         event.preventDefault()
-        var url = "http://localhost:5002/api/superheroInfo/query"
+        var url = `${apiUrl}/superheroInfo/query`
         
         const data = {
             returnN: returnN,
@@ -71,7 +72,7 @@ const Superheroes = () => {
 
     }
     async function fetchRaces(){
-        var url = "http://localhost:5002/api/race"
+        var url = `${apiUrl}/race`
 
         fetch(url, {
             method: 'GET',
@@ -97,7 +98,7 @@ const Superheroes = () => {
     }
 
     async function fetchPublishers(){
-        var url = "http://localhost:5002/api/publisher"
+        var url = `${apiUrl}/publisher`
 
         fetch(url, {
             method: 'GET',
