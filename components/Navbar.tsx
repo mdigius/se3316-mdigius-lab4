@@ -22,7 +22,7 @@ const Navbar = () => {
     } else {
       setLoggedIn('true')
     }
-    if(userQuery==undefined){
+    if(userQuery==undefined || userQuery == ''){
       setUsername('')
     } else {
       setUsername(userQuery)

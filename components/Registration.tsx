@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { HiInformationCircle } from 'react-icons/hi';
 import Link from "next/link";
 import { useRouter } from 'next/navigation'
+import Cookies from "js-cookie";
 
 const Registration = () => {
     const router = useRouter()
@@ -40,7 +41,8 @@ const Registration = () => {
             })
             .then(responseData => {
                 console.log('POST successful:', responseData);
-                router.push('/authenticate')
+                Cookies.set("username", username);
+                router.push('/verify')
             })
             .catch(error => {
                 console.error('Error:', error);

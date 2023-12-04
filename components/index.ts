@@ -17,6 +17,7 @@ import AdminDashboard from './AdminDashboard'
 import AdminDisableUser from './AdminDisableUser'
 import AdminReviewControl from './AdminReviewControl'
 import PrivacyPage from './PrivacyPage'
+import Verify from './Verify'
 
 export {
     Hero,
@@ -37,5 +38,6 @@ export {
     AdminDashboard,
     AdminDisableUser,
     AdminReviewControl,
-    PrivacyPage
+    PrivacyPage,
+    Verify
 }

@@ -389,6 +389,26 @@ app.route('/api/secure/:user/lists')
         client.db("Superheroes").collection("Lists").deleteOne({listName: listName})
         res.status(201).json({ message: 'Successfully deleted list' })
     })
+    app.route('/api/verify')
+        .post(async (req, res) => {
+            const username = req.body.username
+            const usernameResult = await client.db("Superheroes").collection("Users").findOne({ username: username });
+
+            if (!usernameResult) {
+                
+                return res.status(404).json({ error: 'No account with provided username' });
+            }
+            if(usernameResult.verified){
+                return res.status(400).json({ error: 'Already verified!' });
+
+            }
+            await client.db("Superheroes").collection("Users").updateOne(
+                { username: username },
+                { $set: { verified: true } }
+            );
+            res.status(201).json({ message: 'Successfully verified user' })
+
+        })
 
     app.route('/api/secure/')
     .get(async (req, res) => {
@@ -467,7 +487,7 @@ app.route('/api/secure/:user/lists')
             email: email,
             password: hashedPassword,
             disabled: false,
-            verified: true,
+            verified: false,
             admin: false
         }
         client.db("Superheroes").collection("Users").insertOne(user)
