@@ -4,6 +4,7 @@ const cors = require('cors');
 const sanitizeHtml = require('sanitize-html');
 const {MongoClient} = require('mongodb')
 const bcrypt = require('bcrypt');
+const fuzzy = require('fuzzy')
 const saltRounds = 10;
 const uri = 'mongodb+srv://mdigius:mdigi2012@cluster0.xfcxsn5.mongodb.net/?retryWrites=true&w=majority'
 // Code to kill port: lsof -ti:5002 | xargs kill -9
@@ -476,13 +477,14 @@ app.route('/api/secure/:user/lists')
     app.route('/api/superheroInfo/query')
     .get((req, res) => {
         const returnN = req.query.returnN;
-        const name = req.query.name;
+        const name = req.query.name ? req.query.name.replace(/\s/g, '') : '';
         const publisher = req.query.publisher;
         const race = req.query.race;
         const power = req.query.power;
         let superheroes = superheroInfo
-        if(name != ''){
-            superheroes = superheroInfo.filter((hero) => hero.name.toLowerCase().includes(name));
+        if (name !== '') {
+            superheroes = superheroes.filter((hero) => fuzzy.match(name.toLowerCase(), hero.name.toLowerCase()));
+            
         }
 
         if (publisher !== 'any') {
