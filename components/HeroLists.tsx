@@ -3,8 +3,12 @@ import Image from 'next/image';
 import { Button } from 'flowbite-react'
 import React, { useEffect, useState } from 'react'
 import ListResult from './ListResult';
+import Cookies from 'js-cookie';
+import { useRouter } from 'next/navigation';
+import { Navbar } from '.';
 
 const HeroLists = () => {
+  const router = useRouter()
   const [listResults, setListResults] = useState([]);
   async function fetchPublicLists(){
     var url = `http://localhost:5002/api/secure/publicLists`
@@ -31,6 +35,10 @@ const HeroLists = () => {
       });
   }
   useEffect(()=>{
+    if(Cookies.get('loggedin') != 'true'){
+      router.push('/register')
+
+  }
     fetchPublicLists()
 
   }, [])

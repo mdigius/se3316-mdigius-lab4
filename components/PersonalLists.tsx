@@ -4,8 +4,14 @@ import React, { useEffect, useState } from 'react'
 import ListResult from './ListResult';
 import Cookies from 'js-cookie';
 import PersonalListResult from './PersonalListResult';
+import { useRouter } from 'next/navigation';
 const PersonalLists = () => {
+  const router = useRouter()
     useEffect(()=>{
+      if(Cookies.get('loggedin') != 'true'){
+        router.push('/register')
+
+    }
         const userQuery = Cookies.get("username")
        
         if(userQuery==undefined){

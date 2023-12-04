@@ -33,7 +33,7 @@ const Navbar = () => {
       setAdmin('true')
     }
     
-  }, [router])
+  }, [])
 
   
   return (

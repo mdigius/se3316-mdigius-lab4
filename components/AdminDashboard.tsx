@@ -4,8 +4,10 @@ import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { AdminDisableUser, AdminReviewControl } from '.'
 import { HiInformationCircle } from 'react-icons/hi';
-
+import {useRouter} from 'next/navigation'
+import Cookies from 'js-cookie'
 const AdminDashboard = () => {
+    const router = useRouter()
     const [reviewResults, setReviewResults] = useState([])
     const [userResults, setUserResults] = useState([]);
     const [privacy, setPrivacy] = useState('')
@@ -164,10 +166,13 @@ const AdminDashboard = () => {
     }
 
     useEffect(()=> {
+        if(Cookies.get('admin') != 'true'){
+            router.push('/register')
+
+        }
         fetchUserList()
         fetchReviews()
         fetchPolicies()
-
     }, [])
   return (
     <div className="hero">

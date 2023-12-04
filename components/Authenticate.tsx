@@ -14,6 +14,7 @@ const Authenticate = () => {
     const [password, setPassword] = useState('');
     const [showAlert, setShowAlert] = useState(false); // State to manage alert visibility
     const [alertMessage, setAlertMessage] = useState(''); // State to manage alert message
+    const [alertColour, setAlertColour] = useState('failure')
 
     async function handleSubmit(event: React.FormEvent) {
         event.preventDefault();
@@ -59,15 +60,26 @@ const Authenticate = () => {
                 }
                 return response.json();
             })
-            .then(responseData => {
+            .then(async responseData => {
                 console.log('POST successful:', responseData);
                 // If succesful authentication, reroute to account page
                 if(responseData == true){
                     Cookies.set('admin', 'true')
                 }
+                
                 Cookies.set("loggedin", "true");
-                Cookies.set("username", username);
-                router.push('lists/public')
+                Cookies.set("username", username); 
+                
+                
+                await router.push('lists/public')
+                setAlertColour('success')
+                setAlertMessage(`Success! Logging you in`);
+                setShowAlert(true);
+                setTimeout(() => {
+                    window.location.reload();
+                  }, 300);
+                
+                
                 
             })
             .catch(error => {
@@ -115,7 +127,7 @@ const Authenticate = () => {
                     </div>
                     <Button gradientDuoTone="purpleToPink" type="submit" className="transition-transform transform hover:scale-105">Login</Button>
                     {/* Conditionally render the Alert component */}
-                    {showAlert && <Alert color="failure" icon={HiInformationCircle}>{alertMessage}</Alert>}
+                    {showAlert && <Alert color={alertColour} icon={HiInformationCircle}>{alertMessage}</Alert>}
                 </form>
                 <div className="mt-10">
                     <Label value="New here?" />
