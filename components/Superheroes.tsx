@@ -13,7 +13,7 @@ const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 const Superheroes = () => {
     const router = useRouter()
-    const [power, setPower] = useState('any')
+    const [power, setPower] = useState('')
     const [searchCriteria, setSearchCriteria] = useState('name');
     const [publisher, setPublisher] = useState('any')
     const [race, setRace] = useState('any')

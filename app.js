@@ -515,12 +515,12 @@ app.route('/api/secure/:user/lists')
         const power = req.query.power ? req.query.power.replace(/\s/g, '') : '';
         const race = req.query.race;
         let superheroes = superheroInfo
-        if (name !== '') {
+        if (name != '') {
             // Fuzzy matches hero name
             superheroes = superheroes.filter((hero) => fuzzy.match(name.toLowerCase(), hero.name.toLowerCase()));
         }
 
-        if (power !== '') {
+        if (power != '') {
             superheroes = superheroes.filter((hero) => {
                 const heroPowers = getTruePowers(hero.name.toLowerCase());
                 // Fuzzy matches hero power name
